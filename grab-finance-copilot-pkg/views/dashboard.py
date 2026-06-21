@@ -11,6 +11,7 @@ import pandas as pd
 from core import data_loader as dl
 from core import peer_data_loader as pdl
 from core.copilot import ask
+from views.copilot_view import _escape_currency_markdown
 
 GRAB_GREEN = "#00B14F"
 SEGMENT_COLORS = {
@@ -198,7 +199,7 @@ def render(selected_year: str) -> None:
                     st.session_state["explain_resp"] = ask(eq)
                 st.session_state["explain_key"] = cache_key
             resp = st.session_state["explain_resp"]
-            st.markdown(resp.answer)
+            st.markdown(_escape_currency_markdown(resp.answer))
             v = resp.verification
             if v is not None and v.ok:
                 st.success(f"✓ Verified — {v.checked} figure(s) grounded in tool facts")
