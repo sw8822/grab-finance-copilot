@@ -121,6 +121,12 @@ def _exec_summary(gf, y, p) -> list[str]:
 
 def render(selected_year: str) -> None:
     st.header("Finance & Flux Analysis", divider="green")
+    st.caption(
+        f"Data shown is **annual** ({dl.YEARS[0]}–{dl.YEARS[-1]}) from public filings. In production "
+        "for Grab's internal financials I'd also offer **monthly and quarterly** cadence — finer driver "
+        "and seasonality analysis for executives. The app is data-driven on periods, so finer cadence is "
+        "a data change, not a re-architecture."
+    )
 
     gf = dl.group_frame()
     years = dl.YEARS

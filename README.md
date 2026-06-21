@@ -10,18 +10,25 @@ A financial intelligence app for **Grab Holdings (NASDAQ: GRAB)** with benchmark
 
 > **Source of truth:** Grab figures trace to `data/grab_financials.json`; peer figures trace to one official-IR-backed JSON file per company under `data/peers/`. `peer_source_inventory.json` distinguishes complete source coverage from the currently extracted common-metric layer. Every Copilot fact retains provenance and comparison rules come from `data/peer_metric_catalog.json`.
 
+> **Data cadence (demo vs production):** this demo uses **annual** (FY2023–FY2025) figures from public investor-relations filings — the audited headline basis. In production for the executive audience, I would run it at **quarterly and monthly** granularity on Grab's internal data, for finer driver/seasonality analysis and timelier decisions. The period dimension is data-driven, so a finer cadence is a data change, not a re-architecture (and "months → quarter → year" tie-outs become additional integrity checks).
+
 ---
 
 ## Quickstart (local)
 
 ```bash
+# 0. enter the app folder (the runnable app lives here)
+cd grab-finance-copilot-pkg
+
 # 1. install
 pip install -r requirements.txt
 
 # 2. configure Vertex AI (optional — see "Run modes" below)
-cp .env.example .env
-# then edit .env: VERTEX_PROJECT_ID, VERTEX_LOCATION,
-# GOOGLE_APPLICATION_CREDENTIALS=/abs/path/to/secrets/sa.json
+# create a .env (gitignored) with:
+#   VERTEX_PROJECT_ID=your-gcp-project
+#   VERTEX_LOCATION=global
+#   GOOGLE_APPLICATION_CREDENTIALS=/abs/path/to/secrets/sa.json
+#   COPILOT_MODEL=gemini-3.5-flash
 
 # 3. run
 streamlit run app.py
@@ -44,7 +51,7 @@ Config is read from environment variables **or** `st.secrets`. Credentials come 
 
 Defaults to `gemini-3.5-flash` on the Vertex AI `global` endpoint. Override with `COPILOT_MODEL` and `VERTEX_LOCATION`; the configured model becomes the first sidebar option and `gemini-2.5-flash` remains available as a fallback.
 
-The global endpoint improves availability and reduces regional quota pressure, but it does not guarantee data residency. A production deployment with residency requirements should use an approved supported regional or multi-region endpoint instead.
+The global endpoint improves availability and reduces regional quota pressure, but it does not guarantee data residency. **Vertex is used for this demo only** — in production the model provider is whatever Grab approves under its compliance policy (e.g. Amazon Bedrock or an internal LLM), with the required residency and data-use controls.
 
 ---
 
@@ -63,11 +70,9 @@ This makes numeric grounding measurable. Deterministic lookup is a better fit th
 ## Project structure
 
 ```
-grab-finance-copilot/
+grab-finance-copilot-pkg/        # the runnable app (README.md lives at the repo root)
 ├── SPEC.md                  # implemented architecture and acceptance contract
-├── README.md                # this file
 ├── requirements.txt
-├── .env.example
 ├── app.py                   # entry: sidebar + 3 tabs
 ├── data/grab_financials.json   # Grab source of truth (validated)
 ├── data/peers/                 # Uber, Lyft, DoorDash, Sea official-IR facts
@@ -117,8 +122,8 @@ The production design targets **AWS**. The interview project itself is a local S
 
 1. **Containerise** — build the Streamlit app into a Docker image; push to **Amazon ECR**.
 2. **Run** — deploy on **ECS Fargate** or **App Runner** (or EKS), behind an Application Load Balancer with corporate SSO at the edge.
-3. **Secrets** — store `VERTEX_PROJECT_ID`, `COPILOT_MODEL`, and the GCP service-account JSON in **AWS Secrets Manager**; inject at runtime via the ECS task role (no keys in the image, no committed `.env`).
-4. **LLM provider** — the demo uses Vertex AI's authenticated global endpoint (only typed numeric facts are sent). Production can switch `VERTEX_LOCATION` to an approved supported region or multi-region when data-residency policy requires it. The provider sits behind a thin client layer in `core/copilot.py`.
+3. **Secrets** — store the model-provider credentials + config in **AWS Secrets Manager** (the demo's `VERTEX_PROJECT_ID` + GCP service-account JSON; in production, the Grab-approved provider's credentials); inject at runtime via the ECS task role (no keys in the image, no committed `.env`).
+4. **LLM provider** — the demo uses Vertex AI's authenticated global endpoint (only typed numeric facts are sent). **Production uses whatever model service Grab approves for compliance** (e.g. Amazon Bedrock or an internal LLM); it sits behind a thin client layer in `core/copilot.py`, so swapping the provider never touches the rest of the app.
 
 ---
 

@@ -51,6 +51,8 @@ Grab's FY2025 is a genuine inflection: **first full year of net profit**. The da
 
 Stored at `data/grab_financials.json` (included, validated). All values in **USD millions** unless noted; IFRS basis; figures from Grab's official 6-K earnings releases.
 
+> **Cadence (demo vs production):** this demo uses **annual** figures (the audited public-filing basis). In production for the executive audience, I would build it at **quarterly and monthly** granularity using Grab's internal data — finer driver/seasonality analysis and timelier decisions. The period dimension is data-driven (`YEARS` is derived from the data), so a finer cadence is a data change, not a re-architecture, and "months → quarter → year" roll-ups become additional integrity tie-outs.
+
 ### 3.1 Group financials
 
 | Metric | FY2023 | FY2024 | FY2025 |
@@ -150,7 +152,6 @@ grab-finance-copilot/
 ├── SPEC.md                     # this file
 ├── README.md                   # run/deploy instructions
 ├── requirements.txt            # dependencies
-├── .env.example                # Vertex configuration template
 ├── .streamlit/
 │   └── config.toml             # Grab-green theme
 ├── app.py                      # entry: sidebar + 3 tabs
@@ -321,7 +322,7 @@ Render as readable sections (this tab is largely the written deliverable; keep i
 
 **9.3 Compliance posture**
 - Treat as a **decision-support** tool, not a system of record; outputs carry "derived from public filings; verify against source" labelling.
-- Model calls use an enterprise endpoint with the approved data-use policy. The demo uses `global` for availability; production uses an approved regional or multi-region endpoint when residency controls require it.
+- Model calls use an enterprise endpoint with the approved data-use policy. **Vertex AI (`global`) is used for this demo only**; in production the model provider is whatever Grab approves under its compliance policy (e.g. Amazon Bedrock or an internal LLM), with the required residency, data-use, and retention controls.
 - Change management: dataset versioned; restatements (like the FY2023 Deliveries recast) tracked with effective dates; reproducibility (temp 0 + pinned model + pinned data = re-runnable answer).
 
 **9.4 Evaluation methodology (`eval/`)**
@@ -333,7 +334,7 @@ Render as readable sections (this tab is largely the written deliverable; keep i
 
 ## 10. Implemented build sequence
 
-1. **Scaffold** — `requirements.txt`, `.env.example`, `.streamlit/config.toml` (Grab green theme), `app.py` with sidebar (provenance, integrity badge, year filter, model selector) + 3 empty tabs. Verify `streamlit run app.py` boots.
+1. **Scaffold** — `requirements.txt`, `.streamlit/config.toml` (Grab green theme), `app.py` with sidebar (provenance, integrity badge, year filter, model selector) + 3 empty tabs. Verify `streamlit run app.py` boots.
 2. **Layer 1** — implement `views/dashboard.py` per §7 (KPIs → trends → segment mix → waterfall → audit panel). Verify every figure matches §3.
 3. **Layer 2** — implement `views/copilot_view.py` per §8 against the existing `core.copilot.ask` (agentic tool-calling loop). Render the tool-call trace + verification panel. Test offline (retrieval-only) first, then with a key (agent mode).
 4. **Layer 3** — implement `views/governance.py` per §9.
@@ -373,9 +374,9 @@ The `views/` modules may contain presentation logic, but financial values and re
 
 The production target described for this case study is **AWS**; the local interview demo is not a deployed production control plane.
 
-- **Local:** `pip install -r requirements.txt`; copy `.env.example` → `.env`, set `VERTEX_PROJECT_ID` / `VERTEX_LOCATION` / `GOOGLE_APPLICATION_CREDENTIALS` (absolute path to `secrets/sa.json`); `streamlit run app.py`.
-- **AWS (production):** containerise → push to **Amazon ECR** → run on **ECS Fargate / App Runner** (or EKS) behind an ALB with corporate SSO. Store `VERTEX_PROJECT_ID`, `COPILOT_MODEL`, and the GCP service-account JSON in **AWS Secrets Manager**; inject at runtime via the ECS task role. App reads config from env **or** `st.secrets`.
-- **LLM provider:** reached through the authenticated Vertex AI `global` endpoint for this demo (only typed numeric facts are sent). Production can select an approved regional or multi-region endpoint through `VERTEX_LOCATION` when residency policy requires it.
+- **Local:** `pip install -r requirements.txt`; create a `.env` with `VERTEX_PROJECT_ID` / `VERTEX_LOCATION` / `GOOGLE_APPLICATION_CREDENTIALS` (absolute path to `secrets/sa.json`) / `COPILOT_MODEL`; `streamlit run app.py`.
+- **AWS (production):** containerise → push to **Amazon ECR** → run on **ECS Fargate / App Runner** (or EKS) behind an ALB with corporate SSO. Store the model-provider credentials + config in **AWS Secrets Manager** (demo: `VERTEX_PROJECT_ID` + GCP service-account JSON; production: the Grab-approved provider's credentials); inject at runtime via the ECS task role. App reads config from env **or** `st.secrets`.
+- **LLM provider:** Vertex AI (`global`) for this demo only (only typed numeric facts are sent). **Production uses a Grab-approved model service per compliance** (e.g. Amazon Bedrock or an internal LLM), reached behind the thin client layer in `core/copilot.py`.
 - Never commit `.env`, `secrets/`, or keys. `.gitignore` them.
 
 ---
