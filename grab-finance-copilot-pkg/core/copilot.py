@@ -22,6 +22,7 @@ tools returned, and the verifier is the hard backstop.
 """
 from __future__ import annotations
 
+import logging
 import os
 from dataclasses import dataclass, field
 
@@ -224,6 +225,9 @@ def ask(question: str, model: str | None = None, temperature: float = 0.0) -> Co
                 raise RuntimeError("Final synthesis returned no text")
 
     except Exception as e:  # network / auth / SDK error -> safe deterministic fallback
+        # Log the full error for operators; the user-facing answer stays clean and
+        # never leaks internal exception text (only the error class).
+        logging.getLogger(__name__).warning("Copilot LLM call failed: %r", e)
         facts = _dedupe(collected)
         r = Retrieval(facts=facts, matched_years=[]) if facts else grounding.retrieve(question)
         return CopilotResponse(

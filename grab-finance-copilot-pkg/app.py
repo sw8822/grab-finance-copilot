@@ -95,9 +95,13 @@ with st.sidebar:
     selected_model_label = st.selectbox("Copilot model", list(model_options.keys()))
     selected_model = model_options[selected_model_label]
 
-    vertex_project = os.environ.get("VERTEX_PROJECT_ID") or st.secrets.get("VERTEX_PROJECT_ID", "")
+    # _bootstrap_cloud_secrets() already copies VERTEX_PROJECT_ID from st.secrets into
+    # the environment, so reading the env var is sufficient — and avoids the
+    # StreamlitSecretNotFoundError that st.secrets raises when no secrets.toml exists
+    # (the offline / retrieval-only path on a clean clone).
+    vertex_project = os.environ.get("VERTEX_PROJECT_ID", "")
     if vertex_project:
-        st.success(f"Vertex AI ready — agent mode active")
+        st.success("agent mode active")
     else:
         st.warning("No VERTEX_PROJECT_ID — running in retrieval-only mode")
 

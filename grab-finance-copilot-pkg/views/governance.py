@@ -293,6 +293,7 @@ def render() -> None:
 - The model receives numbers only through tool responses; every fact carries a citation.
 - Generated numeric claims are extracted and checked against retrieved values within the configured tolerance.
 - Permitted arithmetic derivations include differences, sums, year-over-year percentages, and margins computed from grounded values.
+- Derivation matching is combinatorial over retrieved fact pairs within tolerance, so it favours recall (never blocks a valid figure) over perfect precision; the deterministic tools and citations remain the primary guarantee.
 - Deterministic retrieval and pinned datasets make the evidence reproducible, although model wording can still vary.
 
 **Output layer**

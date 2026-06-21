@@ -27,12 +27,13 @@ import yaml
 from core import data_loader as dl
 from core import peer_data_loader as pdl
 from core.copilot import ask
-from core.grounding import extract_numbers, retrieve, verify_answer, refusal_reason
+from core.grounding import extract_numbers, retrieve, verify_answer, refusal_reason, _WHITELIST_YEARS
 
 GOLDEN_PATH = os.path.join(os.path.dirname(__file__), "golden_questions.yaml")
 
-# Numbers that should never appear in a refusal answer
-YEAR_WHITELIST = {2023, 2024, 2025, 2026, 2028, 23, 24, 25}
+# Structural year numbers allowed in a refusal answer — derived from the data
+# (dl.YEARS + guidance years), single source of truth, not a hardcoded literal.
+YEAR_WHITELIST = _WHITELIST_YEARS
 
 
 def load_questions() -> list[dict]:

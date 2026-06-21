@@ -202,8 +202,9 @@ def render(selected_year: str) -> None:
         fig_cost.update_layout(height=350, yaxis_title="% of revenue",
                                legend=dict(orientation="h", y=-0.3), plot_bgcolor="white")
         st.plotly_chart(fig_cost, width="stretch")
+    _infl = first_profit_year or "the latest year"
     st.caption(
-        "Margins cross zero in FY2025 — the profitability inflection. Meanwhile every major cost line "
+        f"Margins cross zero in {_infl} — the profitability inflection. Meanwhile every major cost line "
         "falls as a share of revenue (operating leverage): that gap is what turned Grab profitable. "
         "All figures are group P&L lines from the dataset."
     )
