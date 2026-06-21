@@ -10,6 +10,7 @@ import pandas as pd
 
 from core import data_loader as dl
 from core import peer_data_loader as pdl
+from core.copilot import ask
 
 GRAB_GREEN = "#00B14F"
 SEGMENT_COLORS = {
@@ -17,6 +18,17 @@ SEGMENT_COLORS = {
     "Mobility": "#0066CC",
     "Financial Services": "#FF6B35",
     "Others": "#9B59B6",
+}
+
+# "Explain this number" → grounded NL question routed to the same Copilot engine.
+EXPLAIN_Q = {
+    "revenue": "What was Grab's revenue in {y} and how did it change from {p}?",
+    "adjusted_ebitda": "What was Grab's adjusted EBITDA in {y} and what drove the change from {p}?",
+    "profit_for_year": "What was Grab's net profit in {y} compared with {p}?",
+    "operating_profit": "What was Grab's operating profit in {y} versus {p}?",
+    "adjusted_free_cash_flow": "What was Grab's adjusted free cash flow in {y}?",
+    "on_demand_gmv": "What was Grab's On-Demand GMV in {y} and how did it grow?",
+    "group_mtus": "How many monthly transacting users did Grab have in {y}?",
 }
 
 
@@ -70,12 +82,55 @@ def _group_series(metric: str) -> dict[str, dict[str, float]]:
     return out
 
 
+def _exec_summary(gf, y, p) -> list[str]:
+    """Three grounded one-liners derived entirely from the dataset — no hardcoded
+    figures. Reads the reference year (y) vs prior (p); segments resolved dynamically."""
+    def v(m, yr): return float(gf.loc[m, yr])
+    seg_eb = dl.segment_frame("segment_adj_ebitda")
+    margins = dl.segment_margins()
+    raw_seg = dl._raw()["segments"]
+    rev, net, eb = v("revenue", y), v("profit_for_year", y), v("adjusted_ebitda", y)
+    top = seg_eb[y].astype(float).idxmax()
+    bottom = seg_eb[y].astype(float).idxmin()
+
+    if p:
+        g = (rev - v("revenue", p)) / abs(v("revenue", p)) * 100
+        ebp = v("adjusted_ebitda", p)
+        ebg = (eb - ebp) / abs(ebp) * 100 if ebp else 0
+        first = net > 0 and v("profit_for_year", p) <= 0
+        l1 = (f"Revenue {_fmt_prose(rev)} ({g:+.0f}% YoY); "
+              + (f"**first full year of net profit** at {_fmt_prose(net)} (vs {_fmt_prose(v('profit_for_year', p))} in {p})."
+                 if first else f"net result {_fmt_prose(net)}."))
+        l2 = (f"{top} led profitability — segment Adjusted EBITDA {_fmt_prose(float(seg_eb.loc[top, y]))} "
+              f"at {float(margins.loc[top, y]):.1f}% margin; Group Adjusted EBITDA {_fmt_prose(eb)} ({ebg:+.0f}% YoY).")
+        if "loan_portfolio" in raw_seg.get(bottom, {}):
+            loan, loanp = float(raw_seg[bottom]["loan_portfolio"][y]), float(raw_seg[bottom]["loan_portfolio"][p])
+            lg = (loan - loanp) / abs(loanp) * 100 if loanp else 0
+            l3 = (f"{bottom} is the funded growth bet — loan book {_fmt_prose(loan)} ({lg:+.0f}% YoY), "
+                  f"segment EBITDA {_fmt_prose(float(seg_eb.loc[bottom, y]))}.")
+        else:
+            l3 = f"{bottom} is the main drag at segment EBITDA {_fmt_prose(float(seg_eb.loc[bottom, y]))}."
+    else:
+        l1 = f"Revenue {_fmt_prose(rev)}; net result {_fmt_prose(net)}; Group Adjusted EBITDA {_fmt_prose(eb)}."
+        l2 = (f"{top} led profitability — segment Adjusted EBITDA {_fmt_prose(float(seg_eb.loc[top, y]))} "
+              f"at {float(margins.loc[top, y]):.1f}% margin.")
+        l3 = f"{bottom} is the main drag at segment EBITDA {_fmt_prose(float(seg_eb.loc[bottom, y]))}."
+    return [l1, l2, l3]
+
+
 def render(selected_year: str) -> None:
     st.header("Finance & Flux Analysis", divider="green")
 
     gf = dl.group_frame()
     years = dl.YEARS
     prev_year = years[years.index(selected_year) - 1] if years.index(selected_year) > 0 else None
+
+    # ── 7.0 Auto-generated executive summary (grounded, no literals) ───────────
+    with st.container(border=True):
+        st.markdown(f"**Executive summary — {selected_year}**")
+        for line in _exec_summary(gf, selected_year, prev_year):
+            st.markdown(f"- {line}")
+        st.caption("Auto-generated from the dataset — every figure is sourced, none hardcoded.")
 
     # ── 7.1 KPI cards ─────────────────────────────────────────────────────────
     st.subheader("Key Performance Indicators")
@@ -97,11 +152,18 @@ def render(selected_year: str) -> None:
         val = float(gf.loc[key, selected_year])
         prev_val = float(gf.loc[key, prev_year]) if prev_year else None
         cols[i].metric(label, _fmt(val, unit), _yoy_delta(val, prev_val, unit))
+        if key in EXPLAIN_Q and cols[i].button("explain", key=f"ex_{key}",
+                                               help="Ask the grounded Copilot to explain this"):
+            st.session_state["explain"] = (key, label)
 
     for j, (label, key, unit) in enumerate(op_kpi):
+        c = cols[len(kpi_defs) + j]
         val = float(opm.loc[key, selected_year])
         prev_val = float(opm.loc[key, prev_year]) if prev_year else None
-        cols[len(kpi_defs) + j].metric(label, _fmt(val, unit), _yoy_delta(val, prev_val, unit))
+        c.metric(label, _fmt(val, unit), _yoy_delta(val, prev_val, unit))
+        if key in EXPLAIN_Q and c.button("explain", key=f"ex_{key}",
+                                         help="Ask the grounded Copilot to explain this"):
+            st.session_state["explain"] = (key, label)
 
     # First year net profit crosses positive — derived from the data, not pinned.
     first_profit_year = next(
@@ -119,6 +181,36 @@ def render(selected_year: str) -> None:
             f"operating profit turned positive ({_fmt_prose(operating_profit)} vs "
             f"{_fmt_prose(prior_operating_profit)} in {prev_year})."
         )
+
+    # ── 7.1b "Explain this number" → grounded Copilot answer, inline ───────────
+    if "explain" in st.session_state:
+        ekey, elabel = st.session_state["explain"]
+        eq = EXPLAIN_Q[ekey].format(y=selected_year, p=prev_year or selected_year)
+        with st.container(border=True):
+            head = st.columns([9, 1])
+            head[0].markdown(f"**Copilot · {elabel}** — _{eq}_")
+            if head[1].button("✕", key="ex_close"):
+                del st.session_state["explain"]
+                st.rerun()
+            cache_key = (ekey, selected_year)
+            if st.session_state.get("explain_key") != cache_key:
+                with st.spinner("Asking the grounded Copilot…"):
+                    st.session_state["explain_resp"] = ask(eq)
+                st.session_state["explain_key"] = cache_key
+            resp = st.session_state["explain_resp"]
+            st.markdown(resp.answer)
+            v = resp.verification
+            if v is not None and v.ok:
+                st.success(f"✓ Verified — {v.checked} figure(s) grounded in tool facts")
+            elif v is not None:
+                st.error(f"✗ Blocked — ungrounded {sorted(set(v.ungrounded))}; verified facts shown instead")
+            elif resp.mode == "retrieval_only":
+                st.caption("retrieval-only mode — deterministic facts (set VERTEX_PROJECT_ID for narrative)")
+            if resp.citations:
+                with st.expander("Sources"):
+                    for src in resp.citations:
+                        st.caption(f"• {src}")
+            st.caption("Same grounded engine as the Finance Copilot tab — Layer 1 → Layer 2.")
 
     st.divider()
 
