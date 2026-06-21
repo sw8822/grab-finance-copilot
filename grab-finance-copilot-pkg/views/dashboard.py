@@ -103,12 +103,19 @@ def render(selected_year: str) -> None:
         prev_val = float(opm.loc[key, prev_year]) if prev_year else None
         cols[len(kpi_defs) + j].metric(label, _fmt(val, unit), _yoy_delta(val, prev_val, unit))
 
-    if selected_year == "FY2025":
-        net_profit = float(gf.loc["profit_for_year", selected_year])
+    # First year net profit crosses positive — derived from the data, not pinned.
+    first_profit_year = next(
+        (years[i] for i in range(len(years))
+         if float(gf.loc["profit_for_year", years[i]]) > 0
+         and (i == 0 or float(gf.loc["profit_for_year", years[i - 1]]) <= 0)),
+        None,
+    )
+    if selected_year == first_profit_year and prev_year:
+        net_profit_v = float(gf.loc["profit_for_year", selected_year])
         operating_profit = float(gf.loc["operating_profit", selected_year])
         prior_operating_profit = float(gf.loc["operating_profit", prev_year])
         st.success(
-            f"**FY2025 inflection:** First full year of net profit ({_fmt_prose(net_profit)}) — "
+            f"**{selected_year} inflection:** First full year of net profit ({_fmt_prose(net_profit_v)}) — "
             f"operating profit turned positive ({_fmt_prose(operating_profit)} vs "
             f"{_fmt_prose(prior_operating_profit)} in {prev_year})."
         )
@@ -136,12 +143,14 @@ def render(selected_year: str) -> None:
         line=dict(color="#FF6B35", width=2, dash="dot"), yaxis="y2",
         text=[_fmt(v) for v in net_profit],
     ))
-    # Annotate FY2025 first net profit
-    fig_trend.add_annotation(
-        x="FY2025", y=net_profit[2], text="First net profit ✓",
-        showarrow=True, arrowhead=2, ax=60, ay=-40,
-        font=dict(color=GRAB_GREEN, size=12), yref="y2",
-    )
+    # Annotate the first profitable year (derived, not pinned)
+    if first_profit_year:
+        _fp_idx = years.index(first_profit_year)
+        fig_trend.add_annotation(
+            x=first_profit_year, y=net_profit[_fp_idx], text="First net profit ✓",
+            showarrow=True, arrowhead=2, ax=60, ay=-40,
+            font=dict(color=GRAB_GREEN, size=12), yref="y2",
+        )
     fig_trend.update_layout(
         yaxis=dict(title="Revenue (USD M)"),
         yaxis2=dict(title="Profit / EBITDA (USD M)", overlaying="y", side="right"),
@@ -319,7 +328,8 @@ def render(selected_year: str) -> None:
             format_func=lambda x: "Adjusted EBITDA" if x == "adjusted_ebitda" else "Revenue",
         )
     with c2:
-        pair_choice = st.selectbox("Year pair", ["FY2024 → FY2025", "FY2023 → FY2024"])
+        _pairs = [f"{a} → {b}" for a, b in zip(dl.YEARS, dl.YEARS[1:])]
+        pair_choice = st.selectbox("Year pair", list(reversed(_pairs)))
     start_yr, end_yr = pair_choice.replace(" ", "").split("→")
 
     steps = dl.flux_bridge(metric_choice, start_yr, end_yr)
@@ -404,55 +414,65 @@ def render(selected_year: str) -> None:
     rev_series = _group_series("revenue")
     ebitda_series = _group_series("adjusted_ebitda")
     companies = [c for c in pdl.COMPANIES if c in rev_series and c in ebitda_series]
-    last, prior, first = dl.YEARS[-1], dl.YEARS[-2], dl.YEARS[0]
+    first = dl.YEARS[0]
+    # Years present for EVERY loaded company — apples-to-apples for the scatter.
+    # Peers can lag Grab, so we use the latest COMMON year, not the global latest.
+    common = [y for y in dl.YEARS
+              if all(y in rev_series[c] and y in ebitda_series[c] for c in companies)]
+    last = common[-1] if common else dl.YEARS[-1]
+    prior = common[-2] if len(common) >= 2 else None
 
-    # Rule-of-40-style positioning: revenue growth vs Adjusted EBITDA margin (latest FY)
+    # Rule-of-40-style positioning: revenue growth vs Adjusted EBITDA margin (latest common FY)
     st.markdown(f"**Growth vs Profitability — {last}**")
-    fig_pos = go.Figure()
-    max_rev = max(rev_series[c][last] for c in companies)
-    growths = []
-    for c in companies:
-        growth = (rev_series[c][last] - rev_series[c][prior]) / abs(rev_series[c][prior]) * 100
-        margin = ebitda_series[c][last] / rev_series[c][last] * 100
-        growths.append(growth)
-        is_grab = c == "Grab"
+    if prior is None:
+        st.caption("Need at least two reporting years common to all loaded companies for this view.")
+    else:
+        fig_pos = go.Figure()
+        max_rev = max(rev_series[c][last] for c in companies)
+        growths = []
+        for c in companies:
+            growth = (rev_series[c][last] - rev_series[c][prior]) / abs(rev_series[c][prior]) * 100
+            margin = ebitda_series[c][last] / rev_series[c][last] * 100
+            growths.append(growth)
+            is_grab = c == "Grab"
+            fig_pos.add_trace(go.Scatter(
+                x=[growth], y=[margin], mode="markers+text",
+                marker=dict(
+                    size=max(16.0, (rev_series[c][last] / max_rev) * 70),
+                    color=PEER_COLORS[c], line=dict(color="#222", width=2 if is_grab else 0),
+                    opacity=0.95 if is_grab else 0.6,
+                ),
+                text=[f"<b>{c}</b>" if is_grab else c], textposition="top center", name=c,
+                customdata=[[rev_series[c][last], rev_series[c][last] - rev_series[c][prior]]],
+                hovertemplate=(f"<b>{c}</b><br>Revenue growth: %{{x:.1f}}%<br>"
+                               "Adj EBITDA margin: %{y:.1f}%<br>"
+                               "Revenue: $%{customdata[0]:,.0f}M<extra></extra>"),
+            ))
+        lo, hi = min(growths + [0.0]) - 5, max(growths) + 5
         fig_pos.add_trace(go.Scatter(
-            x=[growth], y=[margin], mode="markers+text",
-            marker=dict(
-                size=max(16.0, (rev_series[c][last] / max_rev) * 70),
-                color=PEER_COLORS[c], line=dict(color="#222", width=2 if is_grab else 0),
-                opacity=0.95 if is_grab else 0.6,
-            ),
-            text=[f"<b>{c}</b>" if is_grab else c], textposition="top center", name=c,
-            customdata=[[rev_series[c][last], rev_series[c][last] - rev_series[c][prior]]],
-            hovertemplate=(f"<b>{c}</b><br>Revenue growth: %{{x:.1f}}%<br>"
-                           "Adj EBITDA margin: %{y:.1f}%<br>"
-                           "Revenue: $%{customdata[0]:,.0f}M<extra></extra>"),
+            x=[lo, hi], y=[40 - lo, 40 - hi], mode="lines", name="Rule of 40",
+            line=dict(color="#999", width=1, dash="dash"), hoverinfo="skip",
         ))
-    lo, hi = min(growths + [0.0]) - 5, max(growths) + 5
-    fig_pos.add_trace(go.Scatter(
-        x=[lo, hi], y=[40 - lo, 40 - hi], mode="lines", name="Rule of 40",
-        line=dict(color="#999", width=1, dash="dash"), hoverinfo="skip",
-    ))
-    fig_pos.update_layout(
-        xaxis_title=f"Revenue growth % ({prior}→{last})",
-        yaxis_title=f"Adjusted EBITDA margin % ({last})",
-        height=440, plot_bgcolor="white", showlegend=False,
-    )
-    st.plotly_chart(fig_pos, width="stretch")
-    st.caption(
-        "Dashed line = the 'Rule of 40' (revenue growth % + margin % = 40); points above it "
-        "clear the bar. Bubble size ∝ revenue scale."
-    )
+        fig_pos.update_layout(
+            xaxis_title=f"Revenue growth % ({prior}→{last})",
+            yaxis_title=f"Adjusted EBITDA margin % ({last})",
+            height=440, plot_bgcolor="white", showlegend=False,
+        )
+        st.plotly_chart(fig_pos, width="stretch")
+        st.caption(
+            "Dashed line = the 'Rule of 40' (revenue growth % + margin % = 40); points above it "
+            "clear the bar. Bubble size ∝ revenue scale."
+        )
 
     col_g, col_m = st.columns(2)
     with col_g:
         st.markdown(f"**Revenue growth (indexed to 100 at {first})**")
         fig_idx = go.Figure()
         for c in companies:
-            base = rev_series[c][first]
+            cys = [y for y in dl.YEARS if y in rev_series[c]]   # each company's own years
+            base = rev_series[c][cys[0]]
             fig_idx.add_trace(go.Scatter(
-                x=dl.YEARS, y=[rev_series[c][y] / base * 100 for y in dl.YEARS],
+                x=cys, y=[rev_series[c][y] / base * 100 for y in cys],
                 name=c, mode="lines+markers",
                 line=dict(color=PEER_COLORS[c], width=3 if c == "Grab" else 1.5),
             ))
@@ -465,8 +485,9 @@ def render(selected_year: str) -> None:
         st.markdown("**Adjusted EBITDA margin (% of revenue)**")
         fig_mar = go.Figure()
         for c in companies:
+            cys = [y for y in dl.YEARS if y in rev_series[c] and y in ebitda_series[c]]
             fig_mar.add_trace(go.Scatter(
-                x=dl.YEARS, y=[ebitda_series[c][y] / rev_series[c][y] * 100 for y in dl.YEARS],
+                x=cys, y=[ebitda_series[c][y] / rev_series[c][y] * 100 for y in cys],
                 name=c, mode="lines+markers",
                 line=dict(color=PEER_COLORS[c], width=3 if c == "Grab" else 1.5),
             ))

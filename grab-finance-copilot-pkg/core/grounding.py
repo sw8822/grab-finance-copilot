@@ -68,7 +68,16 @@ _OP_METRIC_ALIASES = {
     "incentives": "consumer_incentives",
 }
 
-_SUPPORTED_YEAR_NUMBERS = {2023, 2024, 2025}
+_SUPPORTED_YEAR_NUMBERS = {int(y[2:]) for y in YEARS}
+# Structural year numbers allowed in answers without grounding: data years (full
+# and 2-digit) plus any guidance years referenced in the dataset. Derived from
+# the data so a new period needs no code change.
+_GUIDANCE_YEARS = {int(k[2:6]) for k in dl._raw().get("guidance", {}) if k.startswith("FY")}
+_WHITELIST_YEARS = (
+    {float(int(y[2:])) for y in YEARS}
+    | {float(int(y[2:]) % 100) for y in YEARS}
+    | {float(n) for n in _GUIDANCE_YEARS}
+)
 _OUT_OF_SCOPE_ENTITY_RE = re.compile(
     r"\b(?:gojek|go-jek|goto)\b",
     re.IGNORECASE,
@@ -457,7 +466,7 @@ def verify_answer(answer: str, retrieval: Retrieval, rel_tol: float = 0.01,
     # included in pairwise derivations because their units/scopes can differ.
     allowed = set(grounded) | derived | abs_grounded
 
-    whitelist_years = {2023.0, 2024.0, 2025.0, 2026.0, 2028.0, 23.0, 24.0, 25.0}
+    whitelist_years = _WHITELIST_YEARS
     # Remove Markdown/outline list indices before checking numeric claims. This
     # avoids whitelisting small values globally (which could hide a fabricated $4M).
     answer_for_check = re.sub(r"(?m)^\s*\d+[.)]\s+", "", answer)

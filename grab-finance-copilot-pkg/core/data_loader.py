@@ -16,14 +16,30 @@ from functools import lru_cache
 
 import pandas as pd
 
-YEARS = ["FY2023", "FY2024", "FY2025"]
-DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "grab_financials.json")
+DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "grab_financials.json"))
 
 
-@lru_cache(maxsize=1)
-def _raw() -> dict:
-    with open(os.path.abspath(DATA_PATH), "r", encoding="utf-8") as f:
+@lru_cache(maxsize=8)
+def _raw_cached(_mtime: float) -> dict:
+    with open(DATA_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def _raw() -> dict:
+    # Cache keyed on file mtime: local data edits hot-reload on rerun, and a
+    # fresh deploy is a new process anyway, so this is a zero-cost safety net.
+    return _raw_cached(os.path.getmtime(DATA_PATH))
+
+
+def _discover_years() -> list[str]:
+    """Fiscal years are derived from the data (sorted FY keys on group revenue).
+    Adding a new year to grab_financials.json flows through the whole app —
+    dashboards, copilot, tools, validation — with no code changes."""
+    revenue = _raw()["group"]["revenue"]
+    return sorted(k for k in revenue if k.startswith("FY"))
+
+
+YEARS = _discover_years()
 
 
 def meta() -> dict:
@@ -48,16 +64,25 @@ def controlling_source(node: dict, year: str) -> str:
     """Resolve the release controlling a fact in a compact Grab metric node."""
     if year in node.get("source_by_year", {}):
         return node["source_by_year"][year]
-    # The FY2024 release presents FY2024 and recast FY2023 comparatives; the
-    # FY2025 release controls the current year. Exceptions use source_by_year.
-    return YEARS[-1] if year == YEARS[-1] else "FY2024"
+    # Latest year is controlled by its own release; earlier years default to the
+    # second-latest release (which carries them as comparatives). Recast
+    # exceptions are pinned per fact via source_by_year. Year-agnostic, so a new
+    # period flows through without code edits.
+    if year == YEARS[-1] or len(YEARS) < 2:
+        return YEARS[-1]
+    return YEARS[-2]
 
 
 def source_citation(year: str, node: dict | None = None) -> str:
     source_year = controlling_source(node, year) if node else year
-    source = meta()["sources"][source_year]
+    sources = meta()["sources"]
+    pending = source_year not in sources
+    if pending:  # newly added period without its source entry yet — degrade, don't crash
+        source_year = sorted(sources)[-1]
+    source = sources[source_year]
+    tag = " (source mapping pending)" if pending else ""
     return (
-        f"{year} fact from {source_year} {source['form']}, filed {source['filed']} "
+        f"{year} fact from {source_year} {source['form']}, filed {source['filed']}{tag} "
         f"| {source['url']}"
     )
 
