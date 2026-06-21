@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0",
+  "company": "Grab Holdings Limited",
+  "ticker": "NASDAQ: GRAB",
+  "currency": "USD millions (unless stated)",
+  "reporting_standard": "IFRS",
+  "period_coverage": ["FY2023", "FY2024", "FY2025"],
+  "notes": [
+    "All figures are sourced from Grab's official investor relations materials (SEC Form 6-K earnings releases).",
+    "FY2024 and FY2023 figures are taken from the FY2024 annual release (filed 2025-02-20), which presents both years on a consistent, recast segment basis.",
+    "FY2025 figures are from the Q4/FY2025 release (filed 2026-02-12).",
+    "RESTATEMENT NOTE: Grab's original FY2023 release (2024-02-22) reported Deliveries Segment Adjusted EBITDA of $313M and Group Adjusted EBITDA of $(22)M under an earlier regional-corporate-cost allocation. The FY2024 release recast FY2023 Deliveries Segment Adjusted EBITDA to $81M (comparable to later periods). This dataset uses the recast $81M for a like-for-like trend. From Jan-2024, Adjusted EBITDA additionally excludes realized FX gain/loss.",
+    "ADJUSTED FREE CASH FLOW NOTE: The FY2025 release changed the definition to include proceeds from PP&E disposals and adjusted FY2024 from $136M to $162M for comparative purposes. This dataset uses the later $162M comparative value.",
+    "Segment Adjusted EBITDA margin: Deliveries & Mobility are computed as Segment Adj EBITDA / segment GMV; Financial Services & Others as Segment Adj EBITDA / segment Revenue (per Grab's definition)."
+  ],
+  "sources": {
+    "FY2025": {
+      "title": "Grab Reports Fourth Quarter and 2025 Results with First Full Year Net Profit",
+      "form": "6-K (Exhibit 99.1)",
+      "filed": "2026-02-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001855612/000185561226000011/a2025q4-earningspressrelea.htm"
+    },
+    "FY2024": {
+      "title": "Grab Reports Fourth Quarter and Full Year 2024 Results",
+      "form": "6-K (Exhibit 99.1)",
+      "filed": "2025-02-20",
+      "url": "https://investors.grab.com/news-and-events/news-details/2025/Grab-Reports-Fourth-Quarter-and-Full-Year-2024-Results-2025-v9rBPVmWY5/default.aspx"
+    },
+    "FY2023": {
+      "title": "Grab Reports Fourth Quarter and Full Year 2023 Results",
+      "form": "6-K (Exhibit 99.1)",
+      "filed": "2024-02-22",
+      "url": "https://investors.grab.com/news-and-events/news-details/2024/Grab-Reports-Fourth-Quarter-and-Full-Year-2023-Results-and-Announces-Inaugural-Share-Repurchase-Program-of-Up-to-500-Million/default.aspx"
+    }
+  },
+  "group": {
+    "revenue":                 {"FY2023": 2359, "FY2024": 2797, "FY2025": 3370, "source": "FY2024", "stmt": "Income statement / Group highlights"},
+    "cost_of_revenue":         {"FY2023": -1499, "FY2024": -1623, "FY2025": -1914, "source": "FY2025", "stmt": "Income statement"},
+    "sales_marketing_expense": {"FY2023": -293, "FY2024": -324, "FY2025": -367, "source": "FY2025", "stmt": "Income statement"},
+    "general_admin_expense":   {"FY2023": -550, "FY2024": -512, "FY2025": -459, "source": "FY2025", "stmt": "Income statement"},
+    "research_dev_expense":    {"FY2023": -421, "FY2024": -410, "FY2025": -428, "source": "FY2025", "stmt": "Income statement"},
+    "net_impairment_fin_assets": {"FY2023": -72, "FY2024": -95, "FY2025": -140, "source": "FY2025", "stmt": "Income statement (credit loss)"},
+    "restructuring_costs":     {"FY2023": -56, "FY2024": -14, "FY2025": -12, "source": "FY2025", "stmt": "Income statement"},
+    "operating_profit":        {"FY2023": -519, "FY2024": -168, "FY2025": 65, "source": "FY2024", "stmt": "Income statement"},
+    "net_finance_income":      {"FY2023": 60, "FY2024": 81, "FY2025": 203, "source": "FY2025", "stmt": "Income statement"},
+    "profit_for_year":         {"FY2023": -485, "FY2024": -158, "FY2025": 200, "source": "FY2024", "stmt": "Income statement"},
+    "income_tax_expense":      {"FY2023": -19, "FY2024": -63, "FY2025": -69, "source": "FY2025", "stmt": "Income statement"},
+    "adjusted_ebitda":         {"FY2023": -22, "FY2024": 313, "FY2025": 500, "source": "FY2024", "stmt": "Non-IFRS reconciliation"},
+    "total_segment_adj_ebitda":{"FY2023": 376, "FY2024": 663, "FY2025": 868, "source": "FY2024", "stmt": "Non-IFRS reconciliation"},
+    "regional_corporate_costs":{"FY2023": -398, "FY2024": -350, "FY2025": -368, "source": "FY2024", "stmt": "Non-IFRS reconciliation (shown positive in filing, stored as cost)"},
+    "share_based_comp":        {"FY2023": -304, "FY2024": -279, "FY2025": -241, "source": "FY2025", "stmt": "Non-IFRS reconciliation"},
+    "depreciation_amortization": {"FY2023": -145, "FY2024": -147, "FY2025": -177, "source": "FY2025", "stmt": "Non-IFRS reconciliation"},
+    "operating_cash_flow":     {"FY2023": 86, "FY2024": 852, "FY2025": 79, "source": "FY2025", "stmt": "Cash flow statement"},
+    "adjusted_free_cash_flow": {"FY2023": -234, "FY2024": 162, "FY2025": 290, "source": "FY2025", "source_by_year": {"FY2023": "FY2023", "FY2024": "FY2025", "FY2025": "FY2025"}, "stmt": "Non-IFRS reconciliation; FY2024 adjusted for comparative purposes after FY2025 definition added PP&E disposal proceeds"},
+    "capital_expenditures":    {"FY2023": -140, "FY2024": -149, "FY2025": -188, "source": "FY2025", "stmt": "Cash flow statement"}
+  },
+  "operating_metrics": {
+    "on_demand_gmv":   {"FY2023": 15592, "FY2024": 18364, "FY2025": 22138, "source": "FY2025", "unit": "USD M"},
+    "group_mtus":      {"FY2023": 35.5, "FY2024": 41.3, "FY2025": 47.2, "source": "FY2025", "unit": "millions of users"},
+    "on_demand_gmv_per_mtu": {"FY2023": 506, "FY2024": 494, "FY2025": 513, "source": "FY2025", "unit": "USD"},
+    "partner_incentives":  {"FY2023": 682, "FY2024": 755, "FY2025": 1002, "source": "FY2025", "unit": "USD M"},
+    "consumer_incentives": {"FY2023": 907, "FY2024": 1088, "FY2025": 1268, "source": "FY2025", "unit": "USD M"},
+    "loan_portfolio":  {"FY2023": 326, "FY2024": 536, "FY2025": 1180, "source": "FY2025", "unit": "USD M, net of ECL"}
+  },
+  "segments": {
+    "Deliveries": {
+      "margin_basis": "GMV",
+      "gmv":      {"FY2023": 10365, "FY2024": 11723, "FY2025": 14236, "source": "FY2025"},
+      "revenue":  {"FY2023": 1310, "FY2024": 1493, "FY2025": 1800, "source": "FY2025"},
+      "segment_adj_ebitda": {"FY2023": 81, "FY2024": 196, "FY2025": 287, "source": "FY2024", "note": "FY2023 recast from $313M originally reported"}
+    },
+    "Mobility": {
+      "margin_basis": "GMV",
+      "gmv":      {"FY2023": 5420, "FY2024": 6640, "FY2025": 7901, "source": "FY2025"},
+      "revenue":  {"FY2023": 871, "FY2024": 1047, "FY2025": 1219, "source": "FY2025"},
+      "segment_adj_ebitda": {"FY2023": 466, "FY2024": 569, "FY2025": 690, "source": "FY2024"}
+    },
+    "Financial Services": {
+      "margin_basis": "Revenue",
+      "revenue":  {"FY2023": 177, "FY2024": 253, "FY2025": 347, "source": "FY2025"},
+      "segment_adj_ebitda": {"FY2023": -170, "FY2024": -105, "FY2025": -110, "source": "FY2025"},
+      "loan_portfolio": {"FY2023": 326, "FY2024": 536, "FY2025": 1180, "source": "FY2025"}
+    },
+    "Others": {
+      "margin_basis": "Revenue",
+      "revenue":  {"FY2023": 1, "FY2024": 4, "FY2025": 4, "source": "FY2025"},
+      "segment_adj_ebitda": {"FY2023": -1, "FY2024": 3, "FY2025": 1, "source": "FY2025"}
+    }
+  },
+  "restatements": {
+    "deliveries_segment_adj_ebitda_fy2023": {
+      "metric": "Deliveries Segment Adjusted EBITDA",
+      "period": "FY2023",
+      "original_value": 313,
+      "recast_value": 81,
+      "unit": "USD M",
+      "original_source": "FY2023",
+      "controlling_source": "FY2024",
+      "reason": "Regional corporate cost allocation change; recast value is used for like-for-like analysis."
+    },
+    "adjusted_free_cash_flow_fy2024": {
+      "metric": "Adjusted Free Cash Flow",
+      "period": "FY2024",
+      "original_value": 136,
+      "recast_value": 162,
+      "unit": "USD M",
+      "original_source": "FY2024",
+      "controlling_source": "FY2025",
+      "reason": "FY2025 definition includes proceeds from disposal of property, plant and equipment; FY2024 was adjusted for comparative purposes."
+    }
+  },
+  "guidance": {
+    "FY2026_revenue_low": {"value": 4040, "source": "FY2025", "note": "$4.04B low end, 20% growth"},
+    "FY2026_revenue_high": {"value": 4100, "source": "FY2025", "note": "$4.10B high end, 22% growth"},
+    "FY2026_adj_ebitda_low": {"value": 700, "source": "FY2025"},
+    "FY2026_adj_ebitda_high": {"value": 720, "source": "FY2025"},
+    "FY2028_adj_ebitda_target": {"value": 1500, "source": "FY2025", "note": "$1.5B by 2028; 20% revenue CAGR 2025-2028; 80% AFCF conversion"}
+  }
+}

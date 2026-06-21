@@ -1,0 +1,170 @@
+{
+  "version": "1.0",
+  "period_coverage": ["FY2023", "FY2024", "FY2025"],
+  "source_policy": {
+    "preferred_source": "Official investor-relations annual earnings release or SEC filing",
+    "precedence": "Use the newest official release that presents a prior period comparatively when it explicitly recasts or redefines that period. Preserve the original release and record the restatement.",
+    "normalization_rule": "Store reported and normalized metric definitions separately. Never rank metrics with incompatible denominators.",
+    "currency": "USD millions unless the source states otherwise",
+    "inventory_scope": "Metric families describe what the official sources disclose. extracted_metric_families describes the narrower set currently loaded into peer JSON files."
+  },
+  "companies": {
+    "Uber": {
+      "ticker": "NYSE: UBER",
+      "benchmark_role": "Multi-vertical platform peer for Mobility and Delivery",
+      "available_source_metric_families": [
+        "group revenue and operating income",
+        "GAAP net income",
+        "Adjusted EBITDA and free cash flow",
+        "Gross Bookings, trips, and MAPCs",
+        "Mobility and Delivery Gross Bookings",
+        "Mobility and Delivery revenue",
+        "Mobility and Delivery Segment Adjusted EBITDA"
+      ],
+      "extracted_metric_families": ["group financials", "cash flow", "Gross Bookings", "trips"],
+      "sources": {
+        "FY2023": {
+          "released": "2024-02-07",
+          "title": "Uber Announces Results for Fourth Quarter and Full Year 2023",
+          "type": "Official investor-relations earnings release",
+          "url": "https://investor.uber.com/news-events/news/press-release-details/2024/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2023/"
+        },
+        "FY2024": {
+          "released": "2025-02-05",
+          "title": "Uber Announces Results for Fourth Quarter and Full Year 2024",
+          "type": "Official investor-relations earnings release",
+          "url": "https://investor.uber.com/news-events/news/press-release-details/2025/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2024/default.aspx"
+        },
+        "FY2025": {
+          "released": "2026-02-04",
+          "title": "Uber Announces Results for Fourth Quarter and Full Year 2025",
+          "type": "Official investor-relations earnings release",
+          "url": "https://investor.uber.com/news-events/news/press-release-details/2026/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2025/default.aspx"
+        }
+      },
+      "caveats": [
+        "Uber reports constant-currency growth alongside reported growth; store both explicitly.",
+        "Business-model changes classified some sales and marketing costs as contra-revenue in 2023, affecting revenue-margin comparability.",
+        "GAAP net income includes material equity-investment revaluations and tax valuation allowance effects; do not use it alone to rank operating performance.",
+        "Corporate G&A and Platform R&D allocations can change and should remain separate from segment EBITDA."
+      ]
+    },
+    "Lyft": {
+      "ticker": "NASDAQ: LYFT",
+      "benchmark_role": "Pure-play Mobility benchmark",
+      "available_source_metric_families": [
+        "Gross Bookings and revenue",
+        "GAAP net income or loss",
+        "Adjusted EBITDA and Adjusted EBITDA as a percentage of Gross Bookings",
+        "operating cash flow and free cash flow",
+        "rides and active or annual riders"
+      ],
+      "extracted_metric_families": ["group financials", "cash flow", "Gross Bookings", "rides", "annual riders"],
+      "sources": {
+        "FY2023": {
+          "released": "2024-02-13",
+          "title": "Correcting and Replacing Lyft Announces Fourth Quarter and Full-Year 2023 Results",
+          "type": "Corrected official investor-relations earnings release",
+          "url": "https://investor.lyft.com/news-events-presentations/press-releases/detail/119/correcting-and-replacing-lyft-announces-fourth-quarter-and-full-year-2023-results"
+        },
+        "FY2024": {
+          "released": "2025-02-11",
+          "title": "Lyft Reports Record Q4 and Full-Year 2024 Results",
+          "type": "Official investor-relations earnings release",
+          "url": "https://investor.lyft.com/news-events-presentations/press-releases/detail/103/lyft-reports-record-q4-and-full-year-2024-results"
+        },
+        "FY2025": {
+          "released": "2026-02-10",
+          "title": "Lyft Reports Record Q4 and Full-Year 2025 Results",
+          "type": "Official investor-relations earnings release",
+          "url": "https://investor.lyft.com/news-events-presentations/press-releases/detail/191/lyft-reports-record-q4-and-full-year-2025-results"
+        }
+      },
+      "caveats": [
+        "Use the corrected FY2023 release; the original release misstated 2024 Adjusted EBITDA margin guidance expansion as 500 basis points instead of 50 basis points.",
+        "Lyft simplified its Gross Bookings definition in Q4 2025 and stated that prior periods were unaffected; retain the definition-change note.",
+        "FY2025 net income includes a material tax valuation allowance release and is not a clean operating-profitability comparison.",
+        "FY2025 revenue includes a material legal, tax, and regulatory reserve impact; store reported and adjusted context."
+      ]
+    },
+    "DoorDash": {
+      "ticker": "NASDAQ: DASH",
+      "benchmark_role": "Deliveries and local-commerce benchmark",
+      "available_source_metric_families": [
+        "Marketplace GOV and total orders",
+        "revenue and Net Revenue Margin",
+        "GAAP net income or loss",
+        "Adjusted EBITDA and Adjusted EBITDA as a percentage of Marketplace GOV",
+        "contribution profit",
+        "operating cash flow and free cash flow",
+        "MAUs and membership"
+      ],
+      "extracted_metric_families": ["group financials", "cash flow", "Marketplace GOV", "total orders"],
+      "sources": {
+        "FY2023": {
+          "released": "2024-02-15",
+          "title": "DoorDash Releases Fourth Quarter and Full Year 2023 Financial Results",
+          "type": "Official investor-relations earnings release",
+          "url": "https://ir.doordash.com/news/news-details/2024/DoorDash-Releases-Fourth-Quarter-and-Full-Year-2023-Financial-Results/default.aspx"
+        },
+        "FY2024": {
+          "released": "2025-02-11",
+          "title": "DoorDash Releases Fourth Quarter and Full Year 2024 Financial Results",
+          "type": "Official investor-relations earnings release",
+          "url": "https://ir.doordash.com/news/news-details/2025/DoorDash-Releases-Fourth-Quarter-and-Full-Year-2024-Financial-Results/default.aspx"
+        },
+        "FY2025": {
+          "released": "2026-02-18",
+          "title": "DoorDash Releases Fourth Quarter and Full Year 2025 Financial Results",
+          "type": "Official investor-relations earnings release",
+          "url": "https://ir.doordash.com/news/news-details/2026/DoorDash-Releases-Fourth-Quarter-and-Full-Year-2025-Financial-Results/default.aspx"
+        }
+      },
+      "caveats": [
+        "Marketplace GOV is directionally comparable to Grab Deliveries GMV but requires an explicit definition bridge.",
+        "FY2023 growth includes Wolt; distinguish reported growth from pro-forma growth where provided.",
+        "FY2025 includes the Deliveroo acquisition from October 2025; store organic and acquisition-affected growth separately where disclosed.",
+        "DoorDash group metrics include restaurant, grocery, retail, and international local-commerce activities."
+      ]
+    },
+    "Sea": {
+      "ticker": "NYSE: SE",
+      "benchmark_role": "Southeast Asian ecosystem, e-commerce monetization, and digital-finance benchmark",
+      "available_source_metric_families": [
+        "group revenue, net income, and Adjusted EBITDA",
+        "Shopee GMV, orders, revenue, and Adjusted EBITDA",
+        "Monee or Digital Financial Services revenue and Adjusted EBITDA",
+        "loan principal outstanding and NPL ratio",
+        "provision for credit losses",
+        "Garena bookings and Adjusted EBITDA"
+      ],
+      "extracted_metric_families": ["group financials", "Shopee GMV and orders", "loan portfolio and NPL ratio", "segment Adjusted EBITDA"],
+      "sources": {
+        "FY2023": {
+          "released": "2024-03-04",
+          "title": "Sea Limited Reports Fourth Quarter and Full Year 2023 Results",
+          "type": "Official investor-relations earnings release PDF",
+          "url": "https://cdn.sea.com/webmain/static/resource/seagroup/website/investornews/4Q2023/STWdlYqdqwmJntN4lrDk/2024.03.04%20Sea%20Fourth%20Quarter%20and%20Full%20Year%202023%20Results.pdf"
+        },
+        "FY2024": {
+          "released": "2025-03-04",
+          "title": "Sea Limited Reports Fourth Quarter and Full Year 2024 Results",
+          "type": "Official investor-relations earnings release PDF",
+          "url": "https://cdn.sea.com/webmain/static/resource/seagroup/website/investornews/4Q2024/PiuK2bhIyLtug8iucOux/2025.03.04%20Sea%20Fourth%20Quarter%20and%20Full%20Year%202024%20Results.pdf"
+        },
+        "FY2025": {
+          "released": "2026-03-03",
+          "title": "Sea Limited Reports Fourth Quarter and Full Year 2025 Results",
+          "type": "Official investor-relations earnings release PDF",
+          "url": "https://cdn.sea.com/investor/4Q2025/JcKns4LaJC8bxcQdJwXz/2026.03.03%20Sea%20Fourth%20Quarter%20and%20Full%20Year%202025%20Results.pdf"
+        }
+      },
+      "caveats": [
+        "Shopee GMV is e-commerce marketplace volume and is not directly comparable with food-delivery GMV.",
+        "Digital Financial Services is branded Monee in FY2025 materials; preserve a stable canonical segment identifier across years.",
+        "Some GAAP reporting combines e-commerce and other services; use business-highlight metrics for Shopee and Monee only with clear non-GAAP labels.",
+        "Credit comparisons require loan-book scope, on-book versus off-book treatment, NPL definition, and credit-loss denominator."
+      ]
+    }
+  }
+}

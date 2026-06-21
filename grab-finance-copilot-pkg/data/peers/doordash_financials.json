@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "company": {"id": "doordash", "name": "DoorDash, Inc.", "ticker": "DASH", "currency": "USD", "scale": "millions", "reporting_standard": "U.S. GAAP"},
+  "sources": {
+    "FY2023": {"title": "DoorDash Releases Fourth Quarter and Full Year 2023 Financial Results", "released": "2024-02-15", "url": "https://ir.doordash.com/news/news-details/2024/DoorDash-Releases-Fourth-Quarter-and-Full-Year-2023-Financial-Results/default.aspx"},
+    "FY2024": {"title": "DoorDash Releases Fourth Quarter and Full Year 2024 Financial Results", "released": "2025-02-11", "url": "https://ir.doordash.com/news/news-details/2025/DoorDash-Releases-Fourth-Quarter-and-Full-Year-2024-Financial-Results/default.aspx"},
+    "FY2025": {"title": "DoorDash Releases Fourth Quarter and Full Year 2025 Financial Results", "released": "2026-02-18", "url": "https://ir.doordash.com/news/news-details/2026/DoorDash-Releases-Fourth-Quarter-and-Full-Year-2025-Financial-Results/default.aspx"}
+  },
+  "group": {
+    "revenue": {"reported_name": "Revenue", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 8635, "source": "FY2023"}, "FY2024": {"value": 10722, "source": "FY2024"}, "FY2025": {"value": 13717, "source": "FY2025"}},
+    "operating_profit": {"reported_name": "Income (loss) from operations", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": -579, "source": "FY2023"}, "FY2024": {"value": -38, "source": "FY2024"}, "FY2025": {"value": 723, "source": "FY2025"}},
+    "net_income": {"reported_name": "Net income (loss) attributable to DoorDash, Inc. common stockholders", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": -558, "source": "FY2023"}, "FY2024": {"value": 123, "source": "FY2024"}, "FY2025": {"value": 935, "source": "FY2025"}},
+    "adjusted_ebitda": {"reported_name": "Adjusted EBITDA", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 1190, "source": "FY2023", "status": "derived_from_quarterly_official_ir", "components": [204, 279, 344, 363]}, "FY2024": {"value": 1900, "source": "FY2024", "status": "derived_from_quarterly_official_ir", "components": [371, 430, 533, 566]}, "FY2025": {"value": 2779, "source": "FY2025", "status": "derived_from_quarterly_official_ir", "components": [590, 655, 754, 780]}},
+    "operating_cash_flow": {"reported_name": "Net cash provided by operating activities", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 1673, "source": "FY2023"}, "FY2024": {"value": 2132, "source": "FY2024"}, "FY2025": {"value": 2431, "source": "FY2025"}},
+    "free_cash_flow": {"reported_name": "Free cash flow", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 1349, "source": "FY2023"}, "FY2024": {"value": 1802, "source": "FY2024"}, "FY2025": {"value": 1826, "source": "FY2025"}}
+  },
+  "operating_metrics": {
+    "platform_volume": {"reported_name": "Marketplace GOV", "unit": "USD M", "FY2023": {"value": 66771, "source": "FY2023", "status": "derived_from_quarterly_official_ir", "components": [15913, 16468, 16751, 17639]}, "FY2024": {"value": 80231, "source": "FY2024", "status": "derived_from_quarterly_official_ir", "components": [19239, 19711, 20002, 21279]}, "FY2025": {"value": 102018, "source": "FY2025", "status": "derived_from_quarterly_official_ir", "components": [23076, 24244, 25015, 29683], "caveat": "Includes Deliveroo from October 2, 2025; FY2025 GOV growth was 23% excluding Deliveroo."}},
+    "activity_count": {"reported_name": "Total Orders", "unit": "million", "FY2023": {"value": 2161, "source": "FY2023", "status": "derived_from_quarterly_official_ir", "components": [512, 532, 543, 574]}, "FY2024": {"value": 2583, "source": "FY2024", "status": "derived_from_quarterly_official_ir", "components": [620, 635, 643, 685]}, "FY2025": {"value": 3172, "source": "FY2025", "status": "derived_from_quarterly_official_ir", "components": [732, 761, 776, 903]}}
+  },
+  "caveats": ["FY2023 includes Wolt; DoorDash disclosed 22% pro-forma Marketplace GOV growth.", "FY2025 includes Deliveroo beginning October 2, 2025.", "Free cash flow equals operating cash flow less PP&E purchases and capitalized software and website development costs."]
+}

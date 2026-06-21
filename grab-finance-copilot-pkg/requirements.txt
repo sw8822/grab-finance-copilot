@@ -1,0 +1,12 @@
+# Grab Finance Copilot — dependencies
+# Python 3.11+
+
+streamlit>=1.39        # chat: st.chat_message / st.chat_input / st.write_stream; st.tabs, st.metric
+pandas>=2.1            # tidy frames + derived metrics (core/data_loader.py)
+plotly>=5.20           # charts; go.Waterfall for the flux bridge (Layer 1)
+google-genai>=1.0      # Vertex AI Gemini SDK for the grounded copilot (Layer 2)
+python-dotenv>=1.0     # local secrets (.env) loading
+pyyaml>=6.0            # governance/eval inventory + golden-question loader
+
+# --- dev / evaluation (optional but referenced by SPEC §9.4 and §11) ---
+pytest>=8.0            # tests/test_core.py (integrity + verifier)

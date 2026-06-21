@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "company": {"id": "sea", "name": "Sea Limited", "ticker": "SE", "currency": "USD", "scale": "millions", "reporting_standard": "U.S. GAAP"},
+  "sources": {
+    "FY2023": {"title": "Sea Fourth Quarter and Full Year 2023 Results", "released": "2024-03-04", "url": "https://cdn.sea.com/webmain/static/resource/seagroup/website/investornews/4Q2023/STWdlYqdqwmJntN4lrDk/2024.03.04%20Sea%20Fourth%20Quarter%20and%20Full%20Year%202023%20Results.pdf"},
+    "FY2024": {"title": "Sea Fourth Quarter and Full Year 2024 Results", "released": "2025-03-04", "url": "https://cdn.sea.com/webmain/static/resource/seagroup/website/investornews/4Q2024/PiuK2bhIyLtug8iucOux/2025.03.04%20Sea%20Fourth%20Quarter%20and%20Full%20Year%202024%20Results.pdf"},
+    "FY2025": {"title": "Sea Fourth Quarter and Full Year 2025 Results", "released": "2026-03-03", "url": "https://cdn.sea.com/investor/4Q2025/JcKns4LaJC8bxcQdJwXz/2026.03.03%20Sea%20Fourth%20Quarter%20and%20Full%20Year%202025%20Results.pdf"}
+  },
+  "group": {
+    "revenue": {"reported_name": "Revenue", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 13063.560, "source": "FY2023"}, "FY2024": {"value": 16819.866, "source": "FY2024"}, "FY2025": {"value": 22938.469, "source": "FY2025"}},
+    "operating_profit": {"reported_name": "Income from operations", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 224.778, "source": "FY2023"}, "FY2024": {"value": 662.152, "source": "FY2024"}, "FY2025": {"value": 1985.306, "source": "FY2025"}},
+    "net_income": {"reported_name": "Net income", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 162.682, "source": "FY2023"}, "FY2024": {"value": 447.827, "source": "FY2024"}, "FY2025": {"value": 1610.894, "source": "FY2025"}},
+    "adjusted_ebitda": {"reported_name": "Total adjusted EBITDA", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 1179.182, "source": "FY2023"}, "FY2024": {"value": 1961.880, "source": "FY2024"}, "FY2025": {"value": 3437.145, "source": "FY2025"}}
+  },
+  "operating_metrics": {
+    "platform_volume": {"reported_name": "Shopee GMV", "unit": "USD M", "FY2023": {"value": 78500, "source": "FY2023", "precision": "rounded"}, "FY2024": {"value": 100500, "source": "FY2024", "precision": "rounded"}, "FY2025": {"value": 127400, "source": "FY2025", "precision": "rounded"}},
+    "activity_count": {"reported_name": "Shopee gross orders", "unit": "million", "FY2023": {"value": 8200, "source": "FY2023", "precision": "rounded"}, "FY2024": {"value": 10900, "source": "FY2024", "precision": "rounded"}, "FY2025": {"value": 13900, "source": "FY2025", "precision": "rounded"}},
+    "loan_portfolio": {"reported_name": "Consumer and SME loans principal outstanding", "unit": "USD M", "FY2023": {"value": 3100, "source": "FY2023", "precision": "rounded"}, "FY2024": {"value": 5100, "source": "FY2024", "precision": "rounded", "caveat": "$4.2B on-book plus $0.9B off-book."}, "FY2025": {"value": 9200, "source": "FY2025", "precision": "rounded"}},
+    "npl_ratio": {"reported_name": "Non-performing loan ratio", "unit": "%", "FY2023": {"value": 1.6, "source": "FY2023"}, "FY2024": {"value": 1.2, "source": "FY2024"}, "FY2025": {"value": 1.1, "source": "FY2025"}}
+  },
+  "segments": {
+    "ecommerce_adjusted_ebitda": {"reported_name": "E-commerce / Shopee adjusted EBITDA", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": -213.774, "source": "FY2023"}, "FY2024": {"value": 155.775, "source": "FY2024"}, "FY2025": {"value": 880.623, "source": "FY2025"}},
+    "financial_services_adjusted_ebitda": {"reported_name": "Digital Financial Services / Monee adjusted EBITDA", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 550.112, "source": "FY2023"}, "FY2024": {"value": 712.242, "source": "FY2024"}, "FY2025": {"value": 1018.084, "source": "FY2025"}},
+    "digital_entertainment_adjusted_ebitda": {"reported_name": "Digital Entertainment / Garena adjusted EBITDA", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 920.923, "source": "FY2023"}, "FY2024": {"value": 1199.166, "source": "FY2024"}, "FY2025": {"value": 1656.131, "source": "FY2025"}}
+  },
+  "caveats": ["Sea renamed Digital Financial Services to Monee in FY2025; the canonical dataset retains a stable financial-services identifier.", "Shopee GMV and gross-order annual values are reported in rounded billions."]
+}

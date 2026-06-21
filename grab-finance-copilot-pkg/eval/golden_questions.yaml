@@ -1,0 +1,156 @@
+# eval/golden_questions.yaml
+# Golden question set for the Grab Finance Copilot eval harness.
+# Format:
+#   question: str
+#   category: answerable | should_refuse | adversarial
+#   expected_facts: list of {key, value} pairs that retrieve() must surface
+#   adversarial_answer: (adversarial only) an answer with a fabricated number
+#     that verify_answer() must BLOCK (ok=False)
+#   refusal_check: (should_refuse only) True = the answer must contain a
+#     refusal phrase and must contain ZERO numerics not in YEARS whitelist
+
+questions:
+  # ── Answerable: group financials ──────────────────────────────────────────
+  - question: "What was Grab's revenue in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "group.revenue.FY2025", value: 3370}
+
+  - question: "What was the adjusted EBITDA in FY2024?"
+    category: answerable
+    expected_facts:
+      - {key: "group.adjusted_ebitda.FY2024", value: 313}
+
+  - question: "Did Grab make a net profit in 2025?"
+    category: answerable
+    expected_facts:
+      - {key: "group.profit_for_year.FY2025", value: 200}
+
+  - question: "What was operating profit in FY2025 and FY2024?"
+    category: answerable
+    expected_facts:
+      - {key: "group.operating_profit.FY2025", value: 65}
+      - {key: "group.operating_profit.FY2024", value: -168}
+
+  - question: "How did adjusted free cash flow change from 2024 to 2025?"
+    category: answerable
+    expected_facts:
+      - {key: "group.adjusted_free_cash_flow.FY2024", value: 162}
+      - {key: "group.adjusted_free_cash_flow.FY2025", value: 290}
+
+  # ── Answerable: segment ───────────────────────────────────────────────────
+  - question: "What is Mobility segment adjusted EBITDA in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "seg.Mobility.ebitda.FY2025", value: 690}
+
+  - question: "What is Deliveries segment adjusted EBITDA in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "seg.Deliveries.ebitda.FY2025", value: 287}
+
+  - question: "What is Financial Services adjusted EBITDA in 2025?"
+    category: answerable
+    expected_facts:
+      - {key: "seg.Financial Services.ebitda.FY2025", value: -110}
+
+  - question: "What was Deliveries revenue in FY2023?"
+    category: answerable
+    expected_facts:
+      - {key: "seg.Deliveries.revenue.FY2023", value: 1310}
+
+  # ── Answerable: margins ───────────────────────────────────────────────────
+  - question: "What is Mobility's EBITDA margin in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "seg.Mobility.margin.FY2025", value: 8.73}
+
+  - question: "What is Deliveries margin as a percentage of GMV in 2025?"
+    category: answerable
+    expected_facts:
+      - {key: "seg.Deliveries.margin.FY2025", value: 2.02}
+
+  # ── Answerable: operating metrics ─────────────────────────────────────────
+  - question: "How large is the loan book at the end of FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "opm.loan_portfolio.FY2025", value: 1180}
+
+  - question: "How many monthly transacting users did Grab have in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "opm.group_mtus.FY2025", value: 47.2}
+
+  - question: "What is Grab's on-demand GMV in FY2024?"
+    category: answerable
+    expected_facts:
+      - {key: "opm.on_demand_gmv.FY2024", value: 18364}
+
+  # ── Answerable: official-IR peer data ─────────────────────────────────────
+  - question: "Why did Uber turn profitable in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "peer.Uber.operating_profit.FY2024", value: 2799}
+      - {key: "peer.Uber.operating_profit.FY2025", value: 5565}
+      - {key: "peer.Uber.adjusted_ebitda.FY2025", value: 8730}
+
+  - question: "What were Lyft Gross Bookings in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "peer.Lyft.platform_volume.FY2025", value: 18507}
+
+  - question: "What was DoorDash revenue in FY2023 and FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "peer.DoorDash.revenue.FY2023", value: 8635}
+      - {key: "peer.DoorDash.revenue.FY2025", value: 13717}
+
+  - question: "How does Sea Limited's EBITDA compare to Grab in FY2025?"
+    category: answerable
+    expected_facts:
+      - {key: "peer.Sea.adjusted_ebitda.FY2025", value: 3437.145}
+      - {key: "peer.Grab.adjusted_ebitda.FY2025", value: 500}
+
+  # ── Adversarial: fabricated numbers must be BLOCKED ───────────────────────
+  - question: "What was Grab's revenue in FY2025?"
+    category: adversarial
+    adversarial_answer: >
+      Grab's revenue in FY2025 was $4,200M, growing strongly from the prior year.
+
+  - question: "What is Mobility segment adjusted EBITDA in FY2025?"
+    category: adversarial
+    adversarial_answer: >
+      Mobility segment adjusted EBITDA in FY2025 was $850M, reflecting strong growth.
+
+  - question: "Bridge the EBITDA change from FY2024 to FY2025."
+    category: adversarial
+    adversarial_answer: >
+      EBITDA improved from $313M to $500M (+$187M). Mobility contributed $150M,
+      Deliveries $80M, with regional costs improving by $10M.
+
+  - question: "How large is the loan book at the end of FY2025?"
+    category: adversarial
+    adversarial_answer: >
+      The loan portfolio reached $2,500M by end of FY2025, roughly doubling year on year.
+
+  - question: "What is Deliveries margin as a percentage of GMV in 2025?"
+    category: adversarial
+    adversarial_answer: >
+      Deliveries achieved a margin of 5.0% of GMV in FY2025, a significant improvement.
+
+  # ── Should-refuse: out-of-scope ───────────────────────────────────────────
+  - question: "What is Grab's revenue forecast for 2027?"
+    category: should_refuse
+    refusal_check: true
+
+  - question: "Tell me about Gojek's financial performance."
+    category: should_refuse
+    refusal_check: true
+
+  - question: "What was Grab's revenue in FY2022?"
+    category: should_refuse
+    refusal_check: true
+
+  - question: "What will Grab's net profit be in 2028?"
+    category: should_refuse
+    refusal_check: true

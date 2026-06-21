@@ -1,0 +1,13 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+.streamlit/secrets.toml
+.DS_Store
+.pytest_cache/
+# never commit credentials
+secrets/
+**/secrets/
+sa.json
+*-service-account.json

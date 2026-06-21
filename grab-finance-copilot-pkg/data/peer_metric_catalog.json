@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "years": ["FY2023", "FY2024", "FY2025"],
+  "group_metrics": {
+    "revenue": {"label": "Revenue", "comparability": "reported_comparable", "note": "Reported revenue in USD millions; Grab uses IFRS while peers use U.S. GAAP, and business mix differs."},
+    "operating_profit": {"label": "Operating profit (loss)", "comparability": "reported_comparable", "note": "Reported operating income or loss in USD millions; Grab uses IFRS while peers use U.S. GAAP."},
+    "net_income": {"label": "Net income (loss)", "comparability": "directional_only", "note": "Reported bottom line under each accounting framework; tax valuation releases and investment revaluations can dominate year-over-year changes."},
+    "adjusted_ebitda": {"label": "Adjusted EBITDA", "comparability": "directional_only", "note": "Company-defined non-GAAP measures; definitions are not identical."},
+    "operating_cash_flow": {"label": "Operating cash flow", "comparability": "reported_comparable", "note": "Reported cash from operating activities in USD millions; classification follows each company's accounting framework."},
+    "free_cash_flow": {"label": "Free cash flow", "comparability": "directional_only", "note": "Non-GAAP definitions differ. Grab reports Adjusted Free Cash Flow."}
+  },
+  "operating_metrics": {
+    "platform_volume": {"label": "Platform volume", "comparability": "not_rankable", "note": "Gross Bookings, Marketplace GOV, GMV, and Grab On-Demand GMV have different inclusions."},
+    "activity_count": {"label": "Transactions / rides / orders", "comparability": "not_rankable", "note": "Trips, rides, orders, and gross orders are different activity definitions."},
+    "annual_users": {"label": "Annual users", "comparability": "directional_only", "note": "Only available for selected companies and definitions differ."},
+    "loan_portfolio": {"label": "Loans principal outstanding", "comparability": "directional_only", "note": "Financial-services credit exposure; scope and consolidation differ."},
+    "npl_ratio": {"label": "Non-performing loan ratio", "comparability": "directional_only", "note": "Company-specific portfolio and delinquency definitions."}
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "company": {"id": "lyft", "name": "Lyft, Inc.", "ticker": "LYFT", "currency": "USD", "scale": "millions", "reporting_standard": "U.S. GAAP"},
+  "sources": {
+    "FY2023": {"title": "Correcting and Replacing: Lyft Announces Fourth Quarter and Full-Year 2023 Results", "released": "2024-02-13", "url": "https://investor.lyft.com/news-events-presentations/press-releases/detail/119/correcting-and-replacing-lyft-announces-fourth-quarter-and-full-year-2023-results"},
+    "FY2024": {"title": "Lyft Reports Record Q4 and Full-Year 2024 Results", "released": "2025-02-11", "url": "https://investor.lyft.com/news-events-presentations/press-releases/detail/103/lyft-reports-record-q4-and-full-year-2024-results"},
+    "FY2025": {"title": "Lyft Reports Record Q4 and Full-Year 2025 Results", "released": "2026-02-10", "url": "https://investor.lyft.com/news-events-presentations/press-releases/detail/191/lyft-reports-record-q4-and-full-year-2025-results"}
+  },
+  "group": {
+    "revenue": {"reported_name": "Revenue", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 4403.6, "source": "FY2023"}, "FY2024": {"value": 5786.0, "source": "FY2024"}, "FY2025": {"value": 6316.3, "source": "FY2025", "caveat": "$168M negative impact from changes in legal, tax, and regulatory reserves."}},
+    "net_income": {"reported_name": "Net income (loss)", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": -340.3, "source": "FY2023"}, "FY2024": {"value": 22.8, "source": "FY2024"}, "FY2025": {"value": 2844.0, "source": "FY2025", "caveat": "$2.9B tax valuation-allowance release."}},
+    "adjusted_ebitda": {"reported_name": "Adjusted EBITDA", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 222.4, "source": "FY2023"}, "FY2024": {"value": 382.4, "source": "FY2024"}, "FY2025": {"value": 528.8, "source": "FY2025"}},
+    "operating_cash_flow": {"reported_name": "Net cash provided by (used in) operating activities", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": -98.2, "source": "FY2023"}, "FY2024": {"value": 849.7, "source": "FY2024"}, "FY2025": {"value": 1168.4, "source": "FY2025"}},
+    "free_cash_flow": {"reported_name": "Free cash flow", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": -248.1, "source": "FY2023"}, "FY2024": {"value": 766.3, "source": "FY2024"}, "FY2025": {"value": 1115.6, "source": "FY2025"}}
+  },
+  "operating_metrics": {
+    "platform_volume": {"reported_name": "Gross Bookings", "unit": "USD M", "FY2023": {"value": 13775.2, "source": "FY2023"}, "FY2024": {"value": 16099.4, "source": "FY2024"}, "FY2025": {"value": 18507.0, "source": "FY2025"}},
+    "activity_count": {"reported_name": "Rides", "unit": "million", "FY2023": {"value": 709.0, "source": "FY2023"}, "FY2024": {"value": 828.3, "source": "FY2024"}, "FY2025": {"value": 945.5, "source": "FY2025"}},
+    "annual_users": {"reported_name": "Annual riders", "unit": "million", "FY2024": {"value": 44.0, "source": "FY2024", "precision": "rounded"}, "FY2025": {"value": 51.3, "source": "FY2025"}}
+  },
+  "caveats": ["FY2023 uses Lyft's corrected release; the correction changed 2024 Adjusted EBITDA margin guidance, not the reported FY2023 results.", "Active Riders definition changed prospectively in Q1 2025; Gross Bookings wording was simplified in Q4 2025 without prior-period impact."]
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proposed Roadmap: From Finance Copilot to Decision Intelligence</title>
+  <style>
+    :root { --green:#00B14F; --ink:#17211b; --muted:#617068; --line:#dbe5df; --soft:#f2f8f4; }
+    * { box-sizing: border-box; }
+    body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; margin: 0; background: #f8faf8; color: var(--ink); }
+    main { max-width: 980px; margin: 0 auto; padding: 44px 24px 72px; }
+    header, section { margin-bottom: 34px; }
+    h1 { font-size: 40px; max-width: 760px; }
+    h1, h2, h3 { line-height: 1.15; margin: 0 0 14px; }
+    p, li { line-height: 1.6; }
+    a { color: #087a3b; }
+    .eyebrow { color: var(--green); font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .executive-summary-box { padding: 22px 24px; background: linear-gradient(145deg,#eef9f2,#f8fcf9); border: 1px solid #cce7d6; border-radius: 18px; }
+    .executive-summary-box ul { margin: 0; padding-left: 22px; }
+    .executive-summary-box li + li { margin-top: 10px; }
+    .callout { padding: 18px 20px; background: #fff; border-left: 5px solid var(--green); border-radius: 10px; box-shadow: 0 8px 24px rgba(17,45,28,.06); }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: block; }
+    th, td { padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+    tr:last-child td { border-bottom: 0; }
+    .grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+    .card h3 { font-size: 18px; }
+    .tag { display: inline-block; background: #def4e7; color: #087a3b; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 700; }
+    .flow { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 18px; }
+    .flow div { padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 12px; font-size: 14px; }
+    .flow strong { display: block; color: var(--green); margin-bottom: 6px; }
+    .muted { color: var(--muted); }
+    @media (max-width: 760px) { .grid,.flow { grid-template-columns: 1fr; } h1 { font-size: 32px; } table { overflow-x: auto; } }
+  </style>
+</head>
+<body>
+<main data-report-audience="product stakeholders">
+  <header data-contract-section="title">
+    <div class="eyebrow">Proposed Product Roadmap</div>
+    <h1>From Finance Copilot to Decision Intelligence</h1>
+    <p class="muted">This is a forward-looking strategy artifact, not a description of every currently implemented capability. The current demo implements the official-source peer fact layer, typed comparison tools, comparability guardrails, and audit evidence; diagnostic scenarios and automated ingestion remain roadmap items.</p>
+  </header>
+
+  <section class="executive-summary-box" data-contract-section="executive-summary">
+    <h2>Executive Summary</h2>
+    <ul>
+      <li><strong>Add peers, but do not build a generic comparison table.</strong> Use each company for a specific benchmark: Uber for platform economics, Lyft for Mobility, DoorDash for Deliveries, and Sea for Southeast Asian ecosystem and fintech economics.</li>
+      <li><strong>The differentiation should be analytical tools, not a larger document corpus.</strong> The copilot should diagnose gaps, isolate drivers, run scenarios, measure guidance pacing, and recommend actions using deterministic calculations.</li>
+      <li><strong>Demo one killer workflow.</strong> Ask why Grab's margin differs from a relevant peer, quantify the gap, simulate the controllable levers, and return an executive insight card with evidence, action, confidence, and risks.</li>
+    </ul>
+  </section>
+
+  <section data-contract-section="key-findings">
+    <h2>A role-based peer set avoids false comparisons</h2>
+    <p>These companies are US-listed, but not all on Nasdaq: Uber and Sea trade on the NYSE. The peer engine should compare business models and normalized metrics, not ticker venue or absolute scale.</p>
+    <table aria-label="Recommended peer benchmark roles">
+      <thead><tr><th>Company</th><th>Benchmark role</th><th>Useful comparable metrics</th><th>Key caveat</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Grab</strong><br>NASDAQ: GRAB</td><td>Anchor company</td><td>On-Demand GMV, segment revenue, segment EBITDA/GMV, MTUs, loan portfolio</td><td>Regional corporate costs and segment recasts must remain visible.</td></tr>
+        <tr><td><strong>Uber</strong><br>NYSE: UBER</td><td>Closest multi-vertical platform peer</td><td>Mobility and Delivery Gross Bookings, segment revenue, segment Adjusted EBITDA, users, trips, FCF conversion</td><td>Global scale, Freight, and accounting definitions differ. <a href="https://investor.uber.com/news-events/news/press-release-details/2026/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2025/default.aspx">Official FY2025 results</a></td></tr>
+        <tr><td><strong>Lyft</strong><br>NASDAQ: LYFT</td><td>Pure-play Mobility benchmark</td><td>Gross Bookings growth, riders, rides, Adjusted EBITDA/Gross Bookings, FCF</td><td>Primarily North American rides; FY2025 net income contains a major tax valuation benefit. <a href="https://investor.lyft.com/news-events-presentations/press-releases/detail/191/lyft-reports-record-q4-and-full-year-2025-results">Official FY2025 results</a></td></tr>
+        <tr><td><strong>DoorDash</strong><br>NASDAQ: DASH</td><td>Cleaner Deliveries benchmark</td><td>Marketplace GOV, orders, net revenue margin, contribution profit/GOV, Adjusted EBITDA/GOV</td><td>Marketplace GOV and Grab delivery GMV need a definition mapping. <a href="https://ir.doordash.com/news/news-details/2026/DoorDash-Releases-Fourth-Quarter-and-Full-Year-2025-Financial-Results/default.aspx">Official FY2025 results</a></td></tr>
+        <tr><td><strong>Sea</strong><br>NYSE: SE</td><td>SEA ecosystem, e-commerce, and fintech analogue</td><td>Shopee monetization and EBITDA, Monee revenue, loan book, NPL ratio, credit-loss intensity</td><td>Shopee GMV is e-commerce volume, not food-delivery GMV; Garena also changes group economics. <a href="https://cdn.sea.com/investor/4Q2025/JcKns4LaJC8bxcQdJwXz/2026.03.03%20Sea%20Fourth%20Quarter%20and%20Full%20Year%202025%20Results.pdf">Official FY2025 results</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>The power comes from six decision tools</h2>
+    <div class="grid">
+      <div class="card"><span class="tag">Diagnose</span><h3>Peer Gap Analyzer</h3><p>Normalizes GMV/Gross Bookings/GOV, take rate, EBITDA margin, growth, user intensity, and FCF conversion. It explains which gaps are real and which are definition artifacts.</p></div>
+      <div class="card"><span class="tag">Decompose</span><h3>Driver Tree Engine</h3><p>Breaks revenue into volume × monetization and EBITDA into revenue × margin, then attributes change to mix, incentives, credit losses, corporate costs, and operating leverage.</p></div>
+      <div class="card"><span class="tag">Simulate</span><h3>Scenario Lab</h3><p>Answers “what if” using deterministic formulas: GMV growth, take rate, incentives, cost-to-serve, loan growth, credit losses, and corporate-cost scenarios with base, upside, and downside cases.</p></div>
+      <div class="card"><span class="tag">Anticipate</span><h3>Guidance &amp; Early-Warning Monitor</h3><p>Measures actual performance against guidance, flags required exit rates, detects peer divergence, and highlights metrics that make guidance increasingly difficult or easier to achieve.</p></div>
+      <div class="card"><span class="tag">Interpret</span><h3>Management Signal Tracker</h3><p>Compares earnings-call language and guidance changes period over period, links every signal to an exact quote, and separates management claims from measured financial evidence.</p></div>
+      <div class="card"><span class="tag">Act</span><h3>Executive Insight Cards</h3><p>Every answer ends with: observation, quantified driver, business implication, recommended action, confidence level, counter-evidence, and source trail.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The killer interview demo is a closed-loop decision</h2>
+    <div class="callout">
+      <p><strong>Executive question:</strong> “Grab's Deliveries margin improved, but how does it compare with Uber Delivery and DoorDash, what explains the gap, and which controllable lever closes it fastest without sacrificing growth?”</p>
+      <p><strong>Copilot response:</strong> normalize peer definitions → quantify the margin gap → isolate monetization, incentives, mix, and cost drivers → simulate three actions → recommend one action with expected EBITDA impact, risk, and confidence → show citations and arithmetic.</p>
+    </div>
+    <div class="flow" aria-label="Power Copilot workflow">
+      <div><strong>1. Retrieve</strong>Versioned filing facts and metric definitions</div>
+      <div><strong>2. Normalize</strong>Comparable denominators and exclusions</div>
+      <div><strong>3. Analyze</strong>Drivers, scenarios, pacing, and risks</div>
+      <div><strong>4. Recommend</strong>Action, impact, confidence, and audit trail</div>
+    </div>
+  </section>
+
+  <section data-contract-section="recommended-next-steps">
+    <h2>Recommended build sequence</h2>
+    <ol>
+      <li><strong>Peer Lens — partially implemented:</strong> FY2023-FY2025 common peer facts, a metric-definition registry, typed company/segment/comparison tools, and comparability notes are in the current demo. Deeper peer segment extraction and a dedicated benchmark tab remain.</li>
+      <li><strong>Insight Engine:</strong> add `diagnose_peer_gap`, a volume/rate/mix driver tree, and executive insight cards. This is the highest interview-value step.</li>
+      <li><strong>Scenario Lab:</strong> add deterministic assumptions and base/upside/downside outputs. Keep the LLM outside the calculations.</li>
+      <li><strong>Production vision:</strong> show automated SEC/IR ingestion, XBRL mapping, restatement detection, scheduled refresh, evaluation, and approval workflows as architecture rather than building all of them for the demo.</li>
+    </ol>
+    <p><strong>Do not prioritize yet:</strong> stock-price prediction, generic sentiment scores, unconstrained web search, or an autonomous investment recommendation. They add risk and distract from the finance-operations case.</p>
+  </section>
+
+  <section data-contract-section="further-questions">
+    <h2>Further Questions</h2>
+    <ul>
+      <li>Should the primary persona be a CFO/FP&amp;A leader, a business-unit operator, or an investor-relations analyst?</li>
+      <li>Which single decision should the interview demo optimize: margin improvement, guidance attainment, capital allocation, or peer benchmarking?</li>
+      <li>Should quarterly data be added now, or should the first peer version preserve the current annual FY2023-FY2025 scope?</li>
+    </ul>
+  </section>
+
+  <section data-contract-section="caveats-and-assumptions">
+    <h2>Caveats and Assumptions</h2>
+    <div class="callout"><p>Reported non-GAAP definitions are company-specific. The peer layer must store the original definition, normalized definition, denominator, exclusions, period, and source. Where normalization is not defensible, the copilot should say “directionally comparable” or refuse the ranking rather than manufacture precision.</p></div>
+  </section>
+</main>
+</body>
+</html>

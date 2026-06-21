@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "company": {"id": "uber", "name": "Uber Technologies, Inc.", "ticker": "UBER", "currency": "USD", "scale": "millions", "reporting_standard": "U.S. GAAP"},
+  "sources": {
+    "FY2023": {"title": "Uber Announces Results for Fourth Quarter and Full Year 2023", "released": "2024-02-07", "url": "https://investor.uber.com/news-events/news/press-release-details/2024/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2023/"},
+    "FY2024": {"title": "Uber Announces Results for Fourth Quarter and Full Year 2024", "released": "2025-02-05", "url": "https://investor.uber.com/news-events/news/press-release-details/2025/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2024/default.aspx"},
+    "FY2025": {"title": "Uber Announces Results for Fourth Quarter and Full Year 2025", "released": "2026-02-04", "url": "https://investor.uber.com/news-events/news/press-release-details/2026/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2025/default.aspx"}
+  },
+  "group": {
+    "revenue": {"reported_name": "Revenue", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 37281, "source": "FY2023"}, "FY2024": {"value": 43978, "source": "FY2024"}, "FY2025": {"value": 52017, "source": "FY2025"}},
+    "operating_profit": {"reported_name": "Income from operations", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 1110, "source": "FY2023"}, "FY2024": {"value": 2799, "source": "FY2024"}, "FY2025": {"value": 5565, "source": "FY2025"}},
+    "net_income": {"reported_name": "Net income attributable to Uber Technologies, Inc.", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 1887, "source": "FY2023", "caveat": "$1.6B pre-tax equity-investment revaluation benefit."}, "FY2024": {"value": 9856, "source": "FY2024", "caveat": "$6.4B tax valuation-allowance release and $1.8B pre-tax investment revaluation benefit."}, "FY2025": {"value": 10053, "source": "FY2025", "caveat": "$5.0B tax valuation-allowance release and $97M pre-tax investment revaluation headwind."}},
+    "adjusted_ebitda": {"reported_name": "Adjusted EBITDA", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 4052, "source": "FY2023"}, "FY2024": {"value": 6484, "source": "FY2024"}, "FY2025": {"value": 8730, "source": "FY2025"}},
+    "operating_cash_flow": {"reported_name": "Net cash provided by operating activities", "basis": "GAAP", "unit": "USD M", "FY2023": {"value": 3585, "source": "FY2023"}, "FY2024": {"value": 7137, "source": "FY2024"}, "FY2025": {"value": 10099, "source": "FY2025"}},
+    "free_cash_flow": {"reported_name": "Free cash flow", "basis": "non-GAAP", "unit": "USD M", "FY2023": {"value": 3362, "source": "FY2023"}, "FY2024": {"value": 6895, "source": "FY2024"}, "FY2025": {"value": 9763, "source": "FY2025"}}
+  },
+  "operating_metrics": {
+    "platform_volume": {"reported_name": "Gross Bookings", "unit": "USD M", "FY2023": {"value": 137865, "source": "FY2023"}, "FY2024": {"value": 162773, "source": "FY2024"}, "FY2025": {"value": 193454, "source": "FY2025"}},
+    "activity_count": {"reported_name": "Trips", "unit": "million", "FY2023": {"value": 9448, "source": "FY2023"}, "FY2024": {"value": 11273, "source": "FY2024"}, "FY2025": {"value": 13567, "source": "FY2025"}}
+  },
+  "caveats": ["Net income is not a clean operating-performance proxy because large tax and investment revaluation items affected all three years."]
+}

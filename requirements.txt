@@ -1,0 +1,3 @@
+# Repo-root requirements for Streamlit Community Cloud (app lives in a subfolder).
+# The authoritative dependency list is in the package; this just includes it.
+-r grab-finance-copilot-pkg/requirements.txt
