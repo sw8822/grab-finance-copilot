@@ -1,4 +1,6 @@
 secrets/
+# private interview-prep study sheet — never commit
+INTERVIEW_PREP.html
 **/.env
 **/.streamlit/secrets.toml
 **/.venv/
