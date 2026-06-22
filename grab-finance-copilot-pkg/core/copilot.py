@@ -1,7 +1,7 @@
 """
 core/copilot.py
 ---------------
-The Finance Copilot (Layer 2) as a TOOL-CALLING AGENT with a deterministic
+The GrabFi Copilot (Layer 2) as a TOOL-CALLING AGENT with a deterministic
 grounding gate.
 
 Agentic flow (VERTEX_PROJECT_ID set):
@@ -32,7 +32,7 @@ from core.grounding import Retrieval, VerificationResult, Fact
 DEFAULT_MODEL = os.environ.get("COPILOT_MODEL", "gemini-3.5-flash")
 MAX_AGENT_STEPS = 5  # tool-use rounds before we stop
 
-AGENT_SYSTEM = """You are Grab Finance Copilot, an analyst agent for executives reviewing Grab and its loaded peers Uber, Lyft, DoorDash, and Sea (FY2023-FY2025).
+AGENT_SYSTEM = """You are GrabFi, an analyst agent for executives reviewing Grab and its loaded peers Uber, Lyft, DoorDash, and Sea (FY2023-FY2025).
 
 You have tools that return figures from official company investor-relations materials, each with a citation. To answer, you MUST call the relevant tool(s) and use ONLY the numbers they return.
 

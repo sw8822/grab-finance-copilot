@@ -1,11 +1,11 @@
-# Grab Finance Copilot
+# GrabFi
 
 A financial intelligence app for **Grab Holdings (NASDAQ: GRAB)** with benchmark data for **Uber, Lyft, DoorDash, and Sea**, FY2023–FY2025. Built for the *Finance Solutions Excellence* case study with three layers:
 
 | Tab | Layer | What it does |
 |---|---|---|
 | 📊 **Finance & Flux** | 1 — *The What* | Revenue, margins, and segment Adjusted EBITDA over 3 years, with a waterfall **flux bridge** that isolates the exact drivers of each change — and an auditable trail back to the source filings. |
-| 🤖 **Finance Copilot** | 2 — *The How* | Ask natural-language questions. Generated numeric claims are grounded in retrieved filing facts and checked before display. |
+| 🤖 **GrabFi Copilot** | 2 — *The How* | Ask natural-language questions. Generated numeric claims are grounded in retrieved filing facts and checked before display. |
 | 🛡️ **Governance & Scale** | 3 — *The So What* | Guardrails, access controls, and evaluation methodology for handling sensitive financial data at scale. |
 
 > **Source of truth:** Grab figures trace to `data/grab_financials.json`; peer figures trace to one official-IR-backed JSON file per company under `data/peers/`. `peer_source_inventory.json` distinguishes complete source coverage from the currently extracted common-metric layer. Every Copilot fact retains provenance and comparison rules come from `data/peer_metric_catalog.json`.

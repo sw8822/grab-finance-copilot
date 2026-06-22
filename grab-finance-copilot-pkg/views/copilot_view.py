@@ -1,5 +1,5 @@
 """
-views/copilot_view.py — Layer 2: Finance Copilot chat UI.
+views/copilot_view.py — Layer 2: GrabFi Copilot chat UI.
 Calls core.copilot.ask(); renders tool-call trace, citations, facts, and
 verification result on every answer.
 """
@@ -70,7 +70,7 @@ def _render_transparency(resp: CopilotResponse) -> None:
 
 
 def render(model: str) -> None:
-    st.header("Finance Copilot", divider="green")
+    st.header("GrabFi Copilot", divider="green")
     st.markdown(
         "Ask about **Grab, Uber, Lyft, DoorDash, and Sea (FY2023–FY2025)**. "
         "Every answer is grounded in official filings or IR releases; numbers are verified before display."

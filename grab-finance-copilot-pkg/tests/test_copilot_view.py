@@ -1,4 +1,4 @@
-"""Finance Copilot rendering tests."""
+"""GrabFi Copilot rendering tests."""
 
 from views.copilot_view import _escape_currency_markdown
 

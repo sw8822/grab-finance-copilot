@@ -1,7 +1,7 @@
 """
 core/tools.py
 -------------
-The TOOL LAYER for the agentic Finance Copilot (Layer 2).
+The TOOL LAYER for the agentic GrabFi Copilot (Layer 2).
 
 The copilot is a tool-calling agent: the model decides *which* typed financial
 tool to call; each tool is a deterministic function that reads the

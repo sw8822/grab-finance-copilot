@@ -1,5 +1,5 @@
 """
-eval/run_eval.py — Regression gate for the Finance Copilot.
+eval/run_eval.py — Regression gate for the GrabFi Copilot.
 Exits 0 on full pass, non-zero on any failure.
 
 Tests:

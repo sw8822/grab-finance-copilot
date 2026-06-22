@@ -1,7 +1,7 @@
 """
-app.py — Grab Finance Copilot entry point.
+app.py — GrabFi entry point.
 Sidebar: data provenance, integrity badge, year filter, model selector.
-Three tabs: Finance & Flux | Finance Copilot | Governance & Scale.
+Three tabs: Finance & Flux | GrabFi Copilot | Governance & Scale.
 """
 import os
 
@@ -43,7 +43,7 @@ from core import peer_data_loader as pdl
 from views import dashboard, copilot_view, governance
 
 st.set_page_config(
-    page_title="Grab Finance Copilot",
+    page_title="GrabFi",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -51,7 +51,7 @@ st.set_page_config(
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 📊 Grab Finance Copilot")
+    st.markdown("## 📊 GrabFi")
     st.caption("Grab + 4 listed peers · FY2023–FY2025")
     st.divider()
 
@@ -126,7 +126,7 @@ with st.sidebar:
 # ── Tabs ───────────────────────────────────────────────────────────────────────
 tab1, tab2, tab3 = st.tabs([
     "📊 Finance & Flux",
-    "🤖 Finance Copilot",
+    "🤖 GrabFi Copilot",
     "🛡️ Governance & Scale",
 ])
 

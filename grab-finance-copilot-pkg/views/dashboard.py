@@ -217,7 +217,7 @@ def render(selected_year: str) -> None:
                 with st.expander("Sources"):
                     for src in resp.citations:
                         st.caption(f"• {src}")
-            st.caption("Same grounded engine as the Finance Copilot tab — Layer 1 → Layer 2.")
+            st.caption("Same grounded engine as the GrabFi Copilot tab — Layer 1 → Layer 2.")
 
     st.divider()
 

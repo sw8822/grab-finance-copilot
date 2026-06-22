@@ -1,7 +1,7 @@
 """
 core/grounding.py
 -----------------
-The anti-hallucination core of the Finance Copilot (Layer 2).
+The anti-hallucination core of the GrabFi Copilot (Layer 2).
 
 Design: an LLM is never trusted to *recall* a number. Instead we run a
 three-stage pipeline:

@@ -1,8 +1,8 @@
-# Grab Finance Copilot — Build Specification
+# GrabFi — Build Specification
 
 **Case study:** *Analyst, Finance Solutions Excellence* — turn corporate financial performance data into a smart, automated insight tool.
 **Subject company:** Grab Holdings Limited (NASDAQ: GRAB), FY2023–FY2025, with a common-metric benchmark layer for Uber, Lyft, DoorDash, and Sea.
-**Deliverable:** A Streamlit app implementing three layers — (1) Core Finance & Flux Analysis, (2) a grounded **tool-calling Finance Copilot agent**, (3) Compliance & Scale.
+**Deliverable:** A Streamlit app implementing three layers — (1) Core Finance & Flux Analysis, (2) a grounded **tool-calling GrabFi Copilot agent**, (3) Compliance & Scale.
 **Spec status:** Implemented architecture and acceptance contract.
 
 ---
@@ -25,7 +25,7 @@ A Grab-focused financial intelligence app with official-IR benchmarks for Uber, 
 | Tab | Case-study layer | One-liner |
 |---|---|---|
 | **📊 Finance & Flux** | Layer 1 — "The What" | Visualise revenue, margins, segment EBITDA over 3 years; isolate the exact drivers of each change with an auditable trail. |
-| **🤖 Finance Copilot** | Layer 2 — "The How" | Ask NL questions; answers are grounded in the filings and numerically verified before display. |
+| **🤖 GrabFi Copilot** | Layer 2 — "The How" | Ask NL questions; answers are grounded in the filings and numerically verified before display. |
 | **🛡️ Governance & Scale** | Layer 3 — "The So What" | Guardrails, access controls, and evaluation methodology for handling sensitive financial data at scale. |
 
 Plus a persistent sidebar: linked Grab and peer provenance, a 13-check auditable-trail badge (9 Grab tie-outs + 4 peer dataset validations), year filter, and Copilot model selector.
@@ -195,7 +195,7 @@ flowchart TD
     DL --> TOOLS[core/tools.py<br/>typed financial tools<br/>each returns facts + citations]
     PDL --> TOOLS
 
-    subgraph AGENT["Finance Copilot — Layer 2 (tool-calling agent)"]
+    subgraph AGENT["GrabFi Copilot — Layer 2 (tool-calling agent)"]
         Q[Executive question] --> LLM[[Gemini · Vertex AI<br/>given tool schemas · temp 0]]
         LLM -->|function_call: which tool + args| EXE[execute_tool<br/>deterministic]
         TOOLS --> EXE
@@ -241,7 +241,7 @@ All numbers come from `data_loader`. No literals.
 
 ---
 
-## 8. Layer 2 — Finance Copilot: a tool-calling agent (`views/copilot_view.py` + `core/tools.py`, `core/copilot.py`)
+## 8. Layer 2 — GrabFi Copilot: a tool-calling agent (`views/copilot_view.py` + `core/tools.py`, `core/copilot.py`)
 
 The copilot is an **LLM agent that calls typed financial tools** and is held to a deterministic grounding gate. This satisfies the case study's "LLM/Agentic framework" requirement *and* the "without hallucinating numbers" requirement — the agent's freedom is in *which tools to call and how to explain*, never in *what the numbers are*.
 

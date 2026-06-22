@@ -1,4 +1,4 @@
-# Grab Finance Copilot — dependencies
+# GrabFi — dependencies
 # Python 3.11+
 
 streamlit>=1.39        # chat: st.chat_message / st.chat_input / st.write_stream; st.tabs, st.metric
