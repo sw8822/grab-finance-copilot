@@ -1,5 +1,5 @@
 # eval/golden_questions.yaml
-# Golden question set for the Grab Finance Copilot eval harness.
+# Golden question set for the GrabFi Copilot eval harness.
 # Format:
 #   question: str
 #   category: answerable | should_refuse | adversarial

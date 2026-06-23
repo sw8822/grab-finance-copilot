@@ -10,3 +10,5 @@ INTERVIEW_PREP.html
 **/*.pyc
 **/.pytest_cache/
 **/.DS_Store
+# interviewer-facing walkthrough (personal presentation aid)
+GRABFI_WALKTHROUGH.html

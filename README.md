@@ -72,6 +72,7 @@ This makes numeric grounding measurable. Deterministic lookup is a better fit th
 ```
 grab-finance-copilot-pkg/        # the runnable app (README.md lives at the repo root)
 ├── SPEC.md                  # implemented architecture and acceptance contract
+├── TECHDOC.md               # code-level reference: what each module & function does
 ├── requirements.txt
 ├── app.py                   # entry: sidebar + 3 tabs
 ├── data/grab_financials.json   # Grab source of truth (validated)
